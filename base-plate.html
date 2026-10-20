@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Column base check | EA Suys</title>
+  <meta name="description" content="Pinned steel column base with cast-in anchors: EN 1993-1-8 and EN 1992-4 design check with drawing, in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <a href="t-stub.html">T-stub</a>
+      <a href="base-plate.html" aria-current="page">Column base</a>
+      <a href="steel-timber.html">Steel-to-timber</a>
+      <a href="timber-bearing.html">Timber bearing</a>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Pinned column base with cast-in anchors</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>A steel column (I/H or hollow section) on a base plate, grout and a concrete foundation, with four headed anchor bolts in two rows beyond the column. Two load cases: compression with shear, and uplift with shear. The check covers the concrete in compression, the base plate and anchors in tension, shear by friction and anchors, the anchorage in concrete and the column weld. Everything runs <em>in this browser</em>.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Concrete in compression under the plate (EN 1993-1-8 6.2.5, 6.2.8.2; α from EN 1992-1-1 6.7)</li><li>Uplift: base plate and anchors (6.2.6.11, Table 6.2); shear by friction and anchors (6.2.2)</li><li>Anchorage per EN 1992-4 (steel, pull-out, cone, pry-out, concrete edge), column weld, detailing</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Fixed bases (moment at the base), post-installed anchors, blow-out, anchor reinforcement</li><li>The column, the foundation and its reinforcement</li></ul></div>
+        <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> fixed bases, other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <div data-fields></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading">
+        <h2>Design check — EN 1993-1-8 · EN 1992-4</h2>
+        <button type="button" class="secondary" data-print>Print</button>
+      </div>
+      <div data-summary></div>
+      <div data-checks></div>
+      <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="base-plate.js"></script>
+</body>
+</html>

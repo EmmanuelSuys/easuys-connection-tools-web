@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validation and scope | EA Suys</title>
+  <meta name="description" content="What the EA Suys connection tools have been compared with: published T-stub tests (Bursi and Jaspart 1995), closed-form solutions and hand calculations, and what they do not cover. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <a href="t-stub.html">T-stub</a>
+      <a href="base-plate.html">Column base</a>
+      <a href="steel-timber.html">Steel-to-timber</a>
+      <a href="timber-bearing.html">Timber bearing</a>
+      <a href="validation.html" aria-current="page">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Validation and scope</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The comparisons below show how far the tools have been checked so far. They do not make the tools a validated design aid.</p>
+      <p>This page lists what each connection tool has been compared with, the result of each comparison and what has not been compared. The pages themselves state what each check covers.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">What has been compared</h2>
+      <div class="table-wrap"><table class="results-table validation-table">
+        <thead><tr><th>Tool</th><th>Compared with</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" rowspan="3"><a href="t-stub.html">T-stub</a></th>
+            <td>Closed-form solutions for the shell element and the solver: elastic cantilever plate, membrane patch, plastic moment of a free strip</td>
+            <td>−0.9 %; exact; −2.5 %</td></tr>
+          <tr><td>The EN 1993-1-8 component model (Table 6.2), S355 T-stub with M20 10.9 bolts and flanges of 10, 25 and 40 mm</td>
+            <td>FE / EN = 0.91, 0.95 and 1.00, with the same failure mode (1, 2, 3)</td></tr>
+          <tr><td>Two published tests: Bursi and Jaspart (1995), T-stubs T1 and T2</td>
+            <td>See <a href="#tstub-tests">below</a></td></tr>
+          <tr><th scope="row"><a href="base-plate.html">Column base</a></th>
+            <td rowspan="3">Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
+            <td>The page examples equal the hand calculations. Column base: the earlier calculations used other assumptions for some steps; these differences are recorded and under review.</td></tr>
+          <tr><th scope="row"><a href="steel-timber.html">Steel-to-timber</a></th>
+            <td rowspan="2">The page examples equal the hand calculations. Where the method is the same, the timber, bolt and masonry values equal the earlier calculations.</td></tr>
+          <tr><th scope="row"><a href="timber-bearing.html">Timber bearing</a></th></tr>
+        </tbody>
+      </table></div>
+      <p class="note">These comparisons run as automated tests with every change of the tools. The column base, steel-to-timber and timber bearing checks have not been compared with physical tests.</p>
+    </section>
+
+    <section class="panel" id="tstub-tests" aria-labelledby="tests-heading">
+      <h2 id="tests-heading">T-stub against tests: Bursi and Jaspart (1995)</h2>
+      <p><strong>Source.</strong> O. Bursi and J.-P. Jaspart, <cite>A refined finite element model for tee-stub and endplate steel connections</cite>, Giornate Italiane della Costruzione in Acciaio, Riva del Garda, 15–18 October 1995. Author preprint on ORBi, University of Liège: <a href="https://orbi.uliege.be/handle/2268/30597">orbi.uliege.be/handle/2268/30597</a>. The same specimens are the benchmark of the authors' paper in the Journal of Constructional Steel Research 43 (1997) 17–42.</p>
+      <p>Two pairs of T-stubs cut from rolled sections, bolted flange to flange and pulled apart; tests without bolt preload. Strengths are the measured values reported in the paper.</p>
+
+      <h3>Specimens</h3>
+      <div class="table-wrap"><table class="results-table validation-table">
+        <thead><tr><th></th><th>T1</th><th>T2</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Section</th><td>IPE 300</td><td>HE 220 B</td></tr>
+          <tr><th scope="row">Flange t<sub>f</sub>; f<sub>y</sub> / f<sub>u</sub></th><td>10.7 mm; 431 / 595 MPa</td><td>16.0 mm; 282 / 483 MPa</td></tr>
+          <tr><th scope="row">Web t<sub>w</sub>; f<sub>y</sub></th><td>7.1 mm; 469 MPa</td><td>9.5 mm; 290 MPa</td></tr>
+          <tr><th scope="row">Root radius r</th><td>15 mm</td><td>18 mm</td></tr>
+          <tr><th scope="row">Bolts</th><td>4 × M12 8.8, f<sub>ub</sub> 974 MPa</td><td>4 × M12 8.8, f<sub>ub</sub> 947 MPa</td></tr>
+          <tr><th scope="row">Layout</th><td colspan="2">Bolts 45 mm from the web axis and 30 mm from the flange edge; length 80 mm with two bolts per row at 40 mm</td></tr>
+          <tr><th scope="row">Input on the T-stub page</th><td>L 80, m 29.45, b 126.0, n<sub>b</sub> 2</td><td>L 80, m 25.85, b 121.2, n<sub>b</sub> 2</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">m is the EN 1993-1-8 value, 0.8 r off the web face, as the T-stub page asks for rolled sections; b keeps the 30 mm edge distance. The FE uses the default hardening modulus E<sub>t</sub> = E/1000 and one f<sub>y</sub> for flange and web (the flange value).</p>
+
+      <h3>Resistance (γ = 1, measured strengths)</h3>
+      <div class="table-wrap"><table class="results-table validation-table">
+        <thead><tr><th></th><th class="num">T1</th><th class="num">T2</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Test: maximum load (at separation)</th><td class="num">203 kN (9.7 mm)</td><td class="num">197 kN (2.5 mm)</td></tr>
+          <tr><th scope="row">EN 1993-1-8 Table 6.2</th><td class="num">134.0 kN, mode 1<br><span class="muted">method 2: 159.6 kN</span></td><td class="num">206.1 kN, mode 2</td></tr>
+          <tr class="key"><th scope="row">FE of this tool</th><td class="num">146.3 kN, mode 1</td><td class="num">205.3 kN, mode 2</td></tr>
+          <tr><th scope="row">FE / test</th><td class="num">0.72</td><td class="num">1.04</td></tr>
+          <tr><th scope="row">EN / test</th><td class="num">0.66</td><td class="num">1.05</td></tr>
+          <tr><th scope="row">FE / EN</th><td class="num">1.09</td><td class="num">1.00</td></tr>
+          <tr class="info"><th scope="row">FE with m measured from the web face (no fillet)</th><td class="num">108.4 kN (0.53 × test)</td><td class="num">158.8 kN (0.81 × test)</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Force at the same separation (test : FE)</h3>
+      <div class="table-wrap"><table class="results-table validation-table">
+        <thead><tr><th>Separation of the pair</th><th class="num">T1</th><th class="num">T2</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">0.5 mm</th><td class="num">—</td><td class="num">90 : 102 kN</td></tr>
+          <tr><th scope="row">1 mm</th><td class="num">110 : 107 kN</td><td class="num">150 : 162 kN</td></tr>
+          <tr><th scope="row">1.5 mm</th><td class="num">—</td><td class="num">180 : 205 kN</td></tr>
+          <tr><th scope="row">2 mm</th><td class="num">150 : 141 kN</td><td class="num">—</td></tr>
+          <tr><th scope="row">3 mm</th><td class="num">170 : 146 kN</td><td class="num">—</td></tr>
+          <tr class="info"><th scope="row">FE resistance reached at (end of the FE curve)</th><td class="num">3.7 mm</td><td class="num">1.7 mm</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Test forces are read from the published curves (about ±5 kN and ±0.2 mm). The separation is the relative displacement of the two T-stubs of a pair, i.e. twice the displacement of the modelled T-stub on its contact plane.</p>
+
+      <h3>What the comparison shows</h3>
+      <ul>
+        <li><strong>T2 (mode 2):</strong> the FE and the EN resistance agree within 1 % and both lie 4–5 % above the test maximum. The FE is stiffer than the test: 8–14 % more force at the same separation. Both are compared at γ = 1 with measured strengths; the partial factors of a design check are not part of this comparison.</li>
+        <li><strong>T1 (mode 1, thin flange):</strong> the test load keeps rising to 203 kN at a separation of 9.7 mm, through strain hardening and membrane action at large deformation. Neither the EN model (134 kN) nor the FE resistance (the load at 5 % plastic strain, with small-displacement kinematics) counts on that reserve. Up to a separation of 2 mm the FE is 3–6 % below the test.</li>
+        <li><strong>Distance m:</strong> the shell model has no root fillet. With m measured from the web face it is 19–47 % below the tests; with the EN m (0.8 r off the web face) it comes within 0–9 % of the EN resistance (T1 lies between EN methods 1 and 2). The T-stub page therefore asks for the EN m for rolled sections.</li>
+      </ul>
+
+      <h3>Status of T1</h3>
+      <p>In the first comparison (11 October 2026) T1 with the EN geometry stopped with a singular stiffness matrix: with an odd number of flange elements across the width the web was not connected to the flange. The mesh now always has an even number of elements across the flange, and an automated test checks the connection for the T1 and T2 widths and solves T1 with the exact EN m. Rerun on 20 October 2026: T1 146.3 kN and T2 205.3 kN, without solver failure.</p>
+
+      <h3>Limits of this comparison</h3>
+      <ul class="assumptions">
+        <li>Two specimens, one bolt size (M12 8.8), one length and one bolt layout; no preloaded bolts.</li>
+        <li>Not compared: bolt bending, flange and web of different strength (T1's web is 9 % stronger than its flange), several bolt rows, welded T-stubs, end plates and column flanges.</li>
+        <li>The FE resistance is an event (5 % plastic strain or bolt yield), not the ultimate load; the model has small-displacement kinematics and no fracture.</li>
+        <li>The test values come from the figures of an author preprint, not from the original test records.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="limits-heading">
+      <h2 id="limits-heading">Limits of all tools</h2>
+      <ul class="assumptions">
+        <li>Feasibility prototype: the tools have not been reviewed for design use.</li>
+        <li>Each page states what it checks and what it does not; the connected members, the foundation and the overall structure are never checked.</li>
+        <li>Partial factors default to the recommended Eurocode values; check the National Annex that applies to the project.</li>
+        <li>Inputs are not checked against product data (sections, anchors, masonry units).</li>
+      </ul>
+      <p class="on-request">Project-specific verification is available on request — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="validation.js"></script>
+</body>
+</html>

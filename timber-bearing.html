@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timber bearing check | EA Suys</title>
+  <meta name="description" content="Timber beam or joist bearing on masonry, concrete or steel: EN 1995-1-1 and EN 1996-1-1 design check with drawing, in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <a href="t-stub.html">T-stub</a>
+      <a href="base-plate.html">Column base</a>
+      <a href="steel-timber.html">Steel-to-timber</a>
+      <a href="timber-bearing.html" aria-current="page">Timber bearing</a>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Timber beam bearing</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>The end of a timber beam or joist on a masonry wall (for instance in a pocket), on concrete or on a steel plate or flange. The check covers compression perpendicular to the grain with the effective contact length and the concentrated load on the masonry or concrete below. Everything runs <em>in this browser</em>.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Compression perpendicular to the grain with the effective contact length and k<sub>c,90</sub> (EN 1995-1-1 6.1.5)</li><li>Concentrated load on masonry (EN 1996-1-1 6.1.3, eccentricity e ≤ t/4 as a warning) or on concrete (EN 1992-1-1 6.7, α = 1)</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Shear of the beam at the support, notches, fixings against uplift or sliding</li><li>The wall at mid-height, the steel plate or flange itself</li></ul></div>
+        <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <div data-fields></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading">
+        <h2>Design check — EN 1995-1-1 · EN 1996-1-1</h2>
+        <button type="button" class="secondary" data-print>Print</button>
+      </div>
+      <div data-summary></div>
+      <div data-checks></div>
+      <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="timber-bearing.js"></script>
+</body>
+</html>

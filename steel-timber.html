@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steel-to-timber check | EA Suys</title>
+  <meta name="description" content="Steel-to-timber connection with bolts or dowels: EN 1995-1-1 and EN 1993-1-8 design check with drawing, in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <a href="t-stub.html">T-stub</a>
+      <a href="base-plate.html">Column base</a>
+      <a href="steel-timber.html" aria-current="page">Steel-to-timber</a>
+      <a href="timber-bearing.html">Timber bearing</a>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Steel-to-timber connection with bolts or dowels</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>A timber member connected to one steel plate (single shear), a slotted-in plate or two outer plates (double shear) with bolts or dowels in rows parallel to the grain. The check covers the Johansen failure modes, the effective number of fasteners, splitting, the steel side and the minimum spacings and distances. Everything runs <em>in this browser</em>.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Johansen failure modes per shear plane (EN 1995-1-1 8.2.3), rope effect for bolts, effective number n<sub>ef</sub></li><li>Splitting (8.1.4), spacings and distances (Tables 8.4 and 8.5)</li><li>Steel side: bolt shear and bearing (EN 1993-1-8 Table 3.4)</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Block shear and plug shear (EN 1995-1-1 Annex A), net sections of timber and plate, block tearing of the plate</li><li>Moments from eccentricity in the fastener group; hardwood (embedment strength for softwood only); fasteners over 30 mm</li></ul></div>
+        <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <div data-fields></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading">
+        <h2>Design check — EN 1995-1-1 · EN 1993-1-8</h2>
+        <button type="button" class="secondary" data-print>Print</button>
+      </div>
+      <div data-summary></div>
+      <div data-checks></div>
+      <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="steel-timber.js"></script>
+</body>
+</html>

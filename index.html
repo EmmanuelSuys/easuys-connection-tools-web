@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connection checks | EA Suys</title>
+  <meta name="description" content="Choose a connection to check: bolted T-stub, pinned column base, steel-to-timber with bolts or dowels, or timber beam bearing. Eurocode design checks with drawings that run in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./" aria-current="page">Overview</a>
+      <a href="t-stub.html">T-stub</a>
+      <a href="base-plate.html">Column base</a>
+      <a href="steel-timber.html">Steel-to-timber</a>
+      <a href="timber-bearing.html">Timber bearing</a>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Connection checks</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculations have not been validated for design decisions.</p>
+      <p>Choose the connection you want to check. Each check follows the Eurocodes, draws the connection as you type and runs entirely <em>in this browser</em>: your input stays on your device.</p>
+    </section>
+
+    <section class="tool-grid" aria-label="Available connection checks">
+      <a class="tool-card" href="t-stub.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <path d="M36 6v26" /><rect x="10" y="32" width="52" height="7" /><path d="M20 26v22M52 26v22" /><path d="M16 26h8M48 26h8M16 48h8M48 48h8" />
+        </svg>
+        <h2>Bolted T-stub in tension</h2>
+        <p>The basic component of end plates, column flanges and base plates: failure modes 1–3 with prying, plus a finite-element cross-check with a 3D view of the deformed T-stub.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+
+      <a class="tool-card" href="base-plate.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <path d="M30 4v18M42 4v18M30 4h12M30 22h12" /><rect x="18" y="22" width="36" height="5" /><rect x="8" y="30" width="56" height="20" /><path d="M22 20v24M50 20v24M19 44h6M47 44h6" />
+        </svg>
+        <h2>Pinned column base with cast-in anchors</h2>
+        <p>Steel column on a base plate, grout and concrete foundation: compression, uplift and shear, the anchors in concrete and the column weld.</p>
+        <p class="standards">EN 1993-1-8 · EN 1992-4</p>
+        <span class="open">Open the check →</span>
+      </a>
+
+      <a class="tool-card" href="steel-timber.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="12" width="60" height="30" /><path d="M6 27h40" stroke-width="3" /><circle cx="22" cy="20" r="3" /><circle cx="36" cy="20" r="3" /><circle cx="22" cy="34" r="3" /><circle cx="36" cy="34" r="3" />
+        </svg>
+        <h2>Steel-to-timber connection with bolts or dowels</h2>
+        <p>One plate, a slotted-in plate or two outer plates: Johansen failure modes, the effective number of fasteners, splitting and the steel side.</p>
+        <p class="standards">EN 1995-1-1 · EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+
+      <a class="tool-card" href="timber-bearing.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="42" y="18" width="22" height="34" /><path d="M42 26h22M42 34h22M42 42h22M53 18v8M48 26v8M58 26v8M53 34v8M48 42v10M58 42v10" /><rect x="6" y="10" width="46" height="8" />
+        </svg>
+        <h2>Timber beam bearing</h2>
+        <p>The end of a beam or joist on masonry (for instance in a pocket), on concrete or on steel: compression perpendicular to the grain and the load on the support below.</p>
+        <p class="standards">EN 1995-1-1 · EN 1996-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+
+      <a class="tool-card tool-card-secondary" href="validation.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="14" y="6" width="44" height="44" /><path d="M22 18h28M22 28h28M22 38h16" /><path d="M44 38l4 4 8-10" stroke-width="3" />
+        </svg>
+        <h2>Validation and scope</h2>
+        <p>What the checks have been compared with — published tests, closed-form solutions and hand calculations — and what they do not cover.</p>
+        <span class="open">Read more →</span>
+      </a>
+    </section>
+
+    <p class="on-request">Other connection types and project-specific verification are available on request — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="overview.js"></script>
+</body>
+</html>

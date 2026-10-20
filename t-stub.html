@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bolted T-stub check | EA Suys</title>
+  <meta name="description" content="Bolted T-stub in tension: EN 1993-1-8 design check with drawing, and a finite-element verification with a 3D view that runs in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <a href="t-stub.html" aria-current="page">T-stub</a>
+      <a href="base-plate.html">Column base</a>
+      <a href="steel-timber.html">Steel-to-timber</a>
+      <a href="timber-bearing.html">Timber bearing</a>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Bolted T-stub in tension</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>The T-stub is the basic component of bolted end plates, column flanges and base plates in tension. Enter the geometry, steel grade and bolts: the drawing and the EN 1993-1-8 design check update as you type. The finite-element verification runs <em>in this browser</em> — the input stays on your device.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>EN 1993-1-8 Table 6.2 modes 1–3 with prying, for an equal-leg T-stub with one bolt row on each side of the web</li><li>Web in tension (6.2.6.8), bolt punching (Table 3.4), spacing and edge distances (Table 3.3)</li><li>FE shell model with plasticity, contact and bolt springs, as a cross-check at γ = 1</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>The effective length: enter L = l<sub>eff</sub> of the governing yield-line pattern yourself</li><li>Welds and the root fillet (enter the EN m), bolt shear and bearing, preload, bolt bending</li><li>Bolt rows acting as a group, backing plates, the connected members</li></ul></div>
+        <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> other connection types, larger models and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <fieldset>
+          <legend>Geometry (mm)</legend>
+          <div class="field"><label for="f-L"><b>L</b> — length (l<sub>eff</sub>)</label><input id="f-L" name="L" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-b"><b>b</b> — flange width</label><input id="f-b" name="b" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-tf"><b>t<sub>f</sub></b> — flange thickness</label><input id="f-tf" name="tf" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-tw"><b>t<sub>w</sub></b> — web thickness</label><input id="f-tw" name="tw" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-hw"><b>h<sub>w</sub></b> — web height</label><input id="f-hw" name="hw" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-m"><b>m</b> — web face to bolt axis (rolled section: EN value, 0.8 r off the web face)</label><input id="f-m" name="m" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-nb"><b>n<sub>b</sub></b> — bolts per row</label><input id="f-nb" name="nb" inputmode="numeric" autocomplete="off"><span class="unit">—</span></div>
+        </fieldset>
+        <fieldset>
+          <legend>Steel and bolts</legend>
+          <div class="field"><label for="f-steelGrade">Steel grade (EN 10025-2)</label>
+            <select id="f-steelGrade" name="steelGrade"><option>S235</option><option>S275</option><option selected>S355</option></select><span class="unit"></span></div>
+          <div class="field"><label for="f-boltSize">Bolt size</label>
+            <select id="f-boltSize" name="boltSize"><option>M12</option><option>M16</option><option selected>M20</option><option>M24</option><option>M27</option><option>M30</option><option>M36</option></select><span class="unit"></span></div>
+          <div class="field"><label for="f-boltClass">Bolt class</label>
+            <select id="f-boltClass" name="boltClass"><option>4.6</option><option>5.6</option><option>8.8</option><option selected>10.9</option></select><span class="unit"></span></div>
+        </fieldset>
+        <fieldset>
+          <legend>Design</legend>
+          <div class="field"><label for="f-FEd"><b>F<sub>Ed</sub></b> — design tension force</label><input id="f-FEd" name="FEd" inputmode="decimal" autocomplete="off"><span class="unit">kN</span></div>
+          <div class="field"><label for="f-gammaM0"><b>γ<sub>M0</sub></b></label><input id="f-gammaM0" name="gammaM0" inputmode="decimal" autocomplete="off"><span class="unit">—</span></div>
+          <div class="field"><label for="f-gammaM2"><b>γ<sub>M2</sub></b></label><input id="f-gammaM2" name="gammaM2" inputmode="decimal" autocomplete="off"><span class="unit">—</span></div>
+        </fieldset>
+        <details class="advanced">
+          <summary>FE settings</summary>
+          <div class="field"><label for="f-meshSize">Mesh size</label><input id="f-meshSize" name="meshSize" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-displacementLimit">Displacement limit</label><input id="f-displacementLimit" name="displacementLimit" inputmode="decimal" autocomplete="off"><span class="unit">mm</span></div>
+          <div class="field"><label for="f-loadSteps">Load steps</label><input id="f-loadSteps" name="loadSteps" inputmode="numeric" autocomplete="off"><span class="unit">—</span></div>
+          <div class="field"><label for="f-E">E</label><input id="f-E" name="E" inputmode="decimal" autocomplete="off"><span class="unit">MPa</span></div>
+          <div class="field"><label for="f-nu">ν</label><input id="f-nu" name="nu" inputmode="decimal" autocomplete="off"><span class="unit">—</span></div>
+          <div class="field"><label for="f-Et">E<sub>t</sub> (empty: E/1000)</label><input id="f-Et" name="Et" inputmode="decimal" autocomplete="off" placeholder="E/1000"><span class="unit">MPa</span></div>
+        </details>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <h2>Design check — EN 1993-1-8</h2>
+      <div data-design-summary></div>
+      <div data-design-table></div>
+      <h3>Detailing and checks</h3>
+      <div data-design-checks></div>
+      <details class="assumption-details"><summary>Assumptions</summary><div data-design-assumptions></div></details>
+    </section>
+
+    <section class="panel" aria-label="FE verification">
+      <div class="panel-heading">
+        <h2>FE verification (in this browser)</h2>
+        <div class="actions">
+          <button type="button" class="primary" data-run-fe>Run FE analysis</button>
+          <button type="button" class="secondary" data-cancel-fe hidden>Cancel</button>
+        </div>
+      </div>
+      <p class="note">Shell model of flange and web with plasticity, contact on a rigid support and bolt springs, loaded step by step to 5&nbsp;% plastic strain or bolt yield. It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value. <span data-dof></span></p>
+      <div class="progress" data-progress hidden>
+        <progress max="1" value="0" data-progress-bar></progress>
+        <span data-progress-text role="status" aria-live="polite"></span>
+      </div>
+      <div data-fe-output hidden>
+        <div class="fe-grid">
+          <div data-fe-summary></div>
+          <div class="view-box">
+            <div class="view-controls">
+              <label>Magnification <input type="range" min="0" max="3" step="0.05" value="1" data-view-scale> <span data-view-scale-text></span></label>
+              <label><input type="checkbox" data-view-undeformed> undeformed</label>
+              <button type="button" class="link-button" data-view-reset>Reset view</button>
+            </div>
+            <div class="view3d-host" data-view3d title="Drag to rotate"></div>
+            <div data-view-legend></div>
+            <p class="note">Drag to rotate. Bolt forces in kN at the resistance event (red: bolt at 0.9 f<sub>ub</sub> A<sub>s</sub>).</p>
+          </div>
+        </div>
+        <h3>Force–displacement curve</h3>
+        <div class="curve-host" data-curve></div>
+        <details class="report-details">
+          <summary>Calculation report</summary>
+          <div class="downloads">
+            <button type="button" class="secondary" data-download-report>Download report (HTML)</button>
+            <button type="button" class="secondary" data-download-json>Download result (JSON)</button>
+          </div>
+          <iframe class="report-frame" title="Calculation report" sandbox="" data-report-frame></iframe>
+        </details>
+      </div>
+    </section>
+
+    <pre class="selftest" id="selftest-output" data-selftest hidden></pre>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
