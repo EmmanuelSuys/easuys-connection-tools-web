@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Column base check | EA Suys</title>
-  <meta name="description" content="Pinned steel column base with cast-in anchors: EN 1993-1-8 and EN 1992-4 design check with drawing, and a finite-element verification of the base plate that runs in your browser. Feasibility prototype, not for design use.">
+  <meta name="description" content="Steel column base with cast-in anchors, pinned or fixed (N + M): EN 1993-1-8 and EN 1992-4 design check with drawing, and a finite-element verification of the base plate that runs in your browser. Feasibility prototype, not for design use.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -50,12 +50,12 @@
 
   <main class="page">
     <section class="intro">
-      <h1>Pinned column base with cast-in anchors</h1>
+      <h1>Column base with cast-in anchors</h1>
       <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
-      <p>A steel column (I/H or hollow section) on a base plate, grout and a concrete foundation, with four headed anchor bolts in two rows beyond the column. Two load cases: compression with shear, and uplift with shear. The check covers the concrete in compression, the base plate and anchors in tension, shear by friction and anchors, the anchorage in concrete and the column weld; a finite-element model of the base plate checks the uplift resistance of the component model. Everything runs <em>in this browser</em>.</p>
+      <p>A steel column (I/H or hollow section) on a base plate, grout and a concrete foundation, with four headed anchor bolts in two rows beyond the column. A <strong>pinned</strong> base has two load cases: compression with shear, and uplift with shear. A <strong>fixed</strong> base carries an axial force with a moment about the strong axis: the moment resistance at that axial force follows EN 1993-1-8 Table 6.7, with the anchor row on one side in tension and the column flange on the other side in compression. The check covers the concrete in compression, the base plate and anchors in tension, shear by friction and anchors, the anchorage in concrete and the column weld; a finite-element model of the base plate checks the uplift resistance of the component model. Everything runs <em>in this browser</em>.</p>
       <div class="scope" role="note" aria-label="Scope of the check">
-        <div><p class="scope-title">Checked</p><ul><li>Concrete in compression under the plate (EN 1993-1-8 6.2.5, 6.2.8.2; α from EN 1992-1-1 6.7)</li><li>Uplift: base plate and anchors (6.2.6.11, Table 6.2); shear by friction and anchors (6.2.2)</li><li>Anchorage per EN 1992-4 (steel, pull-out, cone, pry-out, concrete edge), column weld, detailing</li><li>FE shell model of plate, column stub, anchors and contact, as a cross-check of the uplift resistance at γ = 1 (compression: indicative)</li></ul></div>
-        <div><p class="scope-title">Not checked</p><ul><li>Fixed bases (moment at the base), post-installed anchors, blow-out, anchor reinforcement</li><li>The column, the foundation and its reinforcement</li><li>In the FE model: the anchorage in concrete, the welds, anchor bending and shear</li></ul></div>
+        <div><p class="scope-title">Checked</p><ul><li>Concrete in compression under the plate (EN 1993-1-8 6.2.5, 6.2.8.2; α from EN 1992-1-1 6.7)</li><li>Uplift: base plate and anchors (6.2.6.11, Table 6.2); shear by friction and anchors (6.2.2)</li><li>Fixed base: moment resistance at the axial force (6.2.8.3, Table 6.7), with the compression side limited by the concrete under the flange and by the column flange and web in compression (6.2.6.7)</li><li>Anchorage per EN 1992-4 (steel, pull-out, cone, pry-out, concrete edge), column weld, detailing</li><li>FE shell model of plate, column stub, anchors and contact, as a cross-check of the uplift resistance at γ = 1 (compression: indicative)</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Biaxial bending, the rotational stiffness of a fixed base, post-installed anchors, blow-out, anchor reinforcement</li><li>The column, the foundation and its reinforcement</li><li>In the FE model: the fixed base, the anchorage in concrete, the welds, anchor bending and shear</li></ul></div>
         <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
       </div>
       <p class="on-request"><strong>Available on request:</strong> fixed bases, other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>

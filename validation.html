@@ -67,9 +67,11 @@
             <td>FE / EN = 0.91, 0.95 and 1.00, with the same failure mode (1, 2, 3)</td></tr>
           <tr><td>Two published tests: Bursi and Jaspart (1995), T-stubs T1 and T2</td>
             <td>See <a href="#tstub-tests">below</a></td></tr>
-          <tr><th scope="row" rowspan="2"><a href="base-plate.html">Column base</a></th>
+          <tr><th scope="row" rowspan="3"><a href="base-plate.html">Column base</a></th>
             <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
             <td>The page examples equal the hand calculations. Column base: the earlier calculations used other assumptions for some steps; these differences are recorded and under review.</td></tr>
+          <tr><td>Fixed base (EN 1993-1-8 Table 6.7): hand calculations of the three load cases (tension and compression, both flanges in compression, both anchor rows in tension), and the column base-plate module of the EA Suys calculation scripts on six cases</td>
+            <td>Equal to the hand calculations. Against the scripts: the side forces, the compression width c and the concrete resistance under the flange are equal in all six cases, and M<sub>j,Rd</sub> is equal where the concrete governs. The page also limits the compression side by the column flange and web in compression (6.2.6.7), which the scripts' module did not include.</td></tr>
           <tr><td>FE check of the base plate in uplift against the EN T-stub (at γ = 1): plate strips with one and with two plastic hinges (closed form), a thick plate where the anchors govern, the page example on three meshes</td>
             <td>Strips: FE / EN = 0.99 and 0.98 (extrapolated over three meshes); anchors governing: 1.000. Where the plate governs, the FE result falls by 10–20 % per halving of the mesh (strain peak at the weld corner): FE / EN is then indicative only, and the page says so.</td></tr>
           <tr><th scope="row" rowspan="2"><a href="steel-timber.html">Steel-to-timber</a></th>

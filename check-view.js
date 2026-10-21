@@ -20,6 +20,7 @@ export function kN(valueN) {
 function quantity(value, unit) {
   if (unit === "N") return `${kN(value)} kN`;
   if (unit === "N/mm") return `${num(value, 0)} N/mm`;
+  if (unit === "Nmm") return `${num(value / 1e6, 1)} kNm`;
   if (unit === "—") return num(value, 2);
   return `${num(value, unit === "MPa" ? 2 : 1)} ${unit}`;
 }
