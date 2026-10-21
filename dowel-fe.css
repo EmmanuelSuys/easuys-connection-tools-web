@@ -1,0 +1,32 @@
+/* FE verification panel of the dowel-type fastener (steel-to-timber and timber-to-timber pages). */
+.fe-dowel-status { margin: 6px 0 10px; color: var(--muted); font-size: 14px; }
+.fe-dowel-status .error { color: var(--error); font-weight: 700; }
+.fe-dowel-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 8px;
+}
+.fe-dowel-grid figure { margin: 0; min-width: 0; }
+.fe-dowel .results-table { max-width: 980px; }
+.fe-dowel .results-table th { width: 44%; }
+.fe-dowel .results-table td.num { white-space: normal; }
+.dowel-shape {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fbfcfd;
+  margin-bottom: 8px;
+}
+.curve-host .curve .rigid-line { fill: none; stroke: #5b6672; stroke-width: 1.6; }
+.curve-host .curve .rope-line { stroke: #b7791f; stroke-width: 2; stroke-dasharray: 2 4; }
+.curve-host .curve .legend text { font-size: 11px; }
+@media (max-width: 900px) {
+  .fe-dowel-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  .fe-dowel-grid { grid-template-columns: minmax(0, 1fr); }
+}

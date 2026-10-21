@@ -1,0 +1,25 @@
+/* Basic steel connection pages: the switch between the four checks and the FE panel. Uses the tokens of styles.css. */
+.sub-nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.sub-nav a {
+  text-decoration: none;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--accent);
+  font-size: 14px;
+}
+.sub-nav a[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
+
+.fe-panel .fe-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 8px; }
+.fe-panel .fe-controls label { display: flex; align-items: center; gap: 6px; }
+.fe-status { color: var(--muted); margin: 4px 0 8px; }
+.fe-summary { margin: 6px 0; }
+.fe-note, .fe-meta { color: var(--muted); font-size: 13px; max-width: 980px; }
+.fe-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin: 8px 0; }
+.fe-chart { display: block; width: 100%; height: auto; background: var(--panel); }
+.fe-map { max-height: 560px; margin-top: 8px; }
+.fe-badge { display: inline-block; font-size: 12px; padding: 1px 8px; border: 1px solid var(--warn-line); background: var(--warn-bg); color: var(--warn-ink); border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+@media (max-width: 640px) {
+  .fe-charts { grid-template-columns: minmax(0, 1fr); }
+}

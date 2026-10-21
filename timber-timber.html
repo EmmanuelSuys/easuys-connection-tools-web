@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timber-to-timber check | EA Suys</title>
+  <meta name="description" content="Timber-to-timber connection with nails, screws, bolts or dowels in single or double shear: EN 1995-1-1 design check with drawing and an FE check of the fastener, in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dowel-fe.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <details class="nav-group" name="tool-nav">
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav" data-current>
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html" aria-current="page">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Timber-to-timber connection with nails, screws, bolts or dowels</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>Two timber members in single shear, or two outer members and one inner member in double shear, joined by nails, screws, bolts or dowels in rows parallel to the grain. The check covers the Johansen failure modes with the rope effect, the effective number of fasteners, splitting and the minimum spacings and distances; an FE model of one fastener checks the Johansen value. Everything runs <em>in this browser</em>.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Johansen modes per shear plane (EN 1995-1-1 (8.6) single and (8.7) double shear), rope effect with the caps of 8.2.2(2)</li><li>Embedment (8.15)/(8.16) for nails and small screws, (8.31)-(8.33) for bolts, dowels and larger screws; effective number (8.17)/Table 8.1 and (8.34)</li><li>Splitting (8.1.4), spacings and distances (Tables 8.2, 8.4, 8.5), nail penetration and thickness (8.3.1.2, (8.18))</li><li>FE check of one fastener against the Johansen equations without the rope effect</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Block shear and plug shear (Annex A), net sections, moments from eccentricity in the group</li><li>Members at an angle to each other; hardwood and LVL; withdrawal capacity of nails and screws (F<sub>ax,Rk</sub> is an input)</li><li>Overlapping nails in the inner member (8.3.1.1(7)), staggered rows</li></ul></div>
+        <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <div data-fields></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading">
+        <h2>Design check — EN 1995-1-1</h2>
+        <button type="button" class="secondary" data-print>Print</button>
+      </div>
+      <div data-summary></div>
+      <div data-checks></div>
+      <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+
+    <section class="panel fe-dowel" aria-label="FE verification of the fastener" data-dowel-fe></section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="timber-timber.js"></script>
+</body>
+</html>

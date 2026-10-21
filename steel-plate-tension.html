@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plate in tension check | EA Suys</title>
+  <meta name="description" content="Steel plate in tension with bolt holes: EN 1993-1-1 gross and net section check with a drawing, in your browser. Feasibility prototype, not for design use.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="steel-basic.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <details class="nav-group" name="tool-nav" data-current>
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html" aria-current="page">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <nav class="sub-nav" aria-label="Basic steel connections">
+      <a href="steel-lap-joint.html">Lap joint</a>
+      <a href="steel-bolt-group.html">Bolt group</a>
+      <a href="steel-fillet-weld.html">Fillet weld</a>
+      <a href="steel-plate-tension.html" aria-current="true">Plate in tension</a>
+      </nav>
+      <h1>Plate in tension</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>A rectangular steel plate in tension with holes in one critical section across its width. Everything runs <em>in this browser</em>.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Gross section N<sub>pl,Rd</sub> (EN 1993-1-1 6.2.3 (6.6))</li><li>Net section N<sub>u,Rd</sub> = 0.9 A<sub>net</sub> f<sub>u</sub> / &gamma;<sub>M2</sub> (6.7)</li><li>f<sub>y</sub>, f<sub>u</sub> by thickness (Table 3.1)</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Staggered holes, shear lag, block tearing (see the lap joint), eccentric tension</li><li>Category C connections (N<sub>net,Rd</sub>), the bolts</li></ul></div>
+        <p class="scope-link">EN 1993-1-8:2005 and EN 1993-1-1:2005 with the recommended partial factors (no National Annex). What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+      <p class="on-request"><strong>Available on request:</strong> other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading">
+          <h2>Input</h2>
+          <button type="button" class="link-button" data-reset>Reset to example</button>
+        </div>
+        <div data-fields></div>
+        <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+
+      <section class="panel connection-panel" aria-label="Connection drawing">
+        <h2>Connection</h2>
+        <div class="drawings" data-drawings></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading">
+        <h2>Design check — EN 1993-1-1</h2>
+        <button type="button" class="secondary" data-print>Print</button>
+      </div>
+      <div data-summary></div>
+      <div data-checks></div>
+      <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p>
+  </footer>
+
+  <script type="module" src="steel-plate-tension.js"></script>
+</body>
+</html>

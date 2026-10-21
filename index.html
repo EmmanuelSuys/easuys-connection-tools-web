@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Connection checks | EA Suys</title>
-  <meta name="description" content="Choose a connection to check: bolted T-stub, pinned column base, steel-to-timber with bolts or dowels, or timber beam bearing. Eurocode design checks with drawings that run in your browser. Feasibility prototype, not for design use.">
+  <meta name="description" content="Choose a connection to check: steel (T-stub, column base, end plates, lap joint, bolt group, fillet weld, plate in tension), timber (dowel-type, screws, toothed plates, contact joints, ETA brackets, bearing) or fixings in existing masonry. Eurocode design checks with drawings that run in your browser. Feasibility prototype, not for design use.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,10 +13,37 @@
     <span class="tool-name">Connection tools</span>
     <nav class="tool-nav" aria-label="Connection types">
       <a href="./" aria-current="page">Overview</a>
-      <a href="t-stub.html">T-stub</a>
-      <a href="base-plate.html">Column base</a>
-      <a href="steel-timber.html">Steel-to-timber</a>
-      <a href="timber-bearing.html">Timber bearing</a>
+      <details class="nav-group" name="tool-nav">
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
       <a href="validation.html">Validation</a>
     </nav>
   </header>
@@ -28,55 +55,180 @@
       <p>Choose the connection you want to check. Each check follows the Eurocodes, draws the connection as you type and runs entirely <em>in this browser</em>: your input stays on your device.</p>
     </section>
 
-    <section class="tool-grid" aria-label="Available connection checks">
+    <section class="tool-group" id="steel" aria-labelledby="group-steel">
+      <h2 class="group-title" id="group-steel">Steel</h2>
+      <div class="tool-grid">
       <a class="tool-card" href="t-stub.html">
         <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
           <path d="M36 6v26" /><rect x="10" y="32" width="52" height="7" /><path d="M20 26v22M52 26v22" /><path d="M16 26h8M48 26h8M16 48h8M48 48h8" />
         </svg>
-        <h2>Bolted T-stub in tension</h2>
+        <h3>Bolted T-stub in tension</h3>
         <p>The basic component of end plates, column flanges and base plates: failure modes 1–3 with prying, plus a finite-element cross-check with a 3D view of the deformed T-stub.</p>
         <p class="standards">EN 1993-1-8</p>
         <span class="open">Open the check →</span>
       </a>
-
       <a class="tool-card" href="base-plate.html">
         <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
           <path d="M30 4v18M42 4v18M30 4h12M30 22h12" /><rect x="18" y="22" width="36" height="5" /><rect x="8" y="30" width="56" height="20" /><path d="M22 20v24M50 20v24M19 44h6M47 44h6" />
         </svg>
-        <h2>Pinned column base with cast-in anchors</h2>
-        <p>Steel column on a base plate, grout and concrete foundation: compression, uplift and shear, the anchors in concrete and the column weld.</p>
+        <h3>Pinned column base with cast-in anchors</h3>
+        <p>Steel column on a base plate, grout and concrete foundation: compression, uplift and shear, the anchors in concrete and the column weld, with a finite-element check of the base plate.</p>
         <p class="standards">EN 1993-1-8 · EN 1992-4</p>
         <span class="open">Open the check →</span>
       </a>
 
+      <a class="tool-card" href="end-plate-column.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="4" width="10" height="46" /><rect x="16" y="10" width="4" height="34" /><path d="M20 14h44M20 36h44M20 25h44" /><path d="M12 18h12M12 30h12" />
+        </svg>
+        <h3>Bolted beam-to-column end plate</h3>
+        <p>A beam bolted to the flange of a continuous, unstiffened column: end-plate and column-flange T-stubs per row and in groups, the column web panel and web, the moment resistance and the stiffness, with an FE check of the end-plate tension zone.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="end-plate-splice.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <path d="M4 14h30M4 36h30M4 25h30M38 14h30M38 36h30M38 25h30" /><rect x="32" y="8" width="4" height="38" /><rect x="36" y="8" width="4" height="38" /><path d="M28 16h16M28 34h16" />
+        </svg>
+        <h3>End-plate beam splice</h3>
+        <p>Two matching rolled beams joined by bolted end plates: T-stubs and bolt rows singly and in groups, beam compression, the moment resistance and the stiffness, with an FE check of the end-plate tension zone.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="end-plate-web.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="33" y="4" width="6" height="46" /><rect x="27" y="10" width="4" height="30" /><rect x="41" y="10" width="4" height="30" /><path d="M4 14h23M4 34h23M45 14h23M45 34h23M22 18h28M22 30h28" />
+        </svg>
+        <h3>Double-sided connection to a beam web</h3>
+        <p>Two secondary beams on opposite sides of a primary beam web, with through-bolts and balanced moments: end-plate rows and groups, bolt shear and bearing on the primary web, with an FE check of the end-plate tension zone.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="steel-lap-joint.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="14" width="40" height="10" /><rect x="26" y="26" width="40" height="10" /><path d="M32 8v34M40 8v34M29 8h6M37 8h6M29 42h6M37 42h6" />
+        </svg>
+        <h3>Bolted lap joint</h3>
+        <p>Two plates lapped and bolted in shear: bolt shear and bearing per position, long joints, slip, the net section and block tearing, with an elastic FE of the bolt forces.</p>
+        <p class="standards">EN 1993-1-8 · EN 1993-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="steel-bolt-group.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="8" y="8" width="40" height="38" /><circle cx="18" cy="18" r="3" /><circle cx="38" cy="18" r="3" /><circle cx="18" cy="36" r="3" /><circle cx="38" cy="36" r="3" /><path d="M64 8v30M58 32l6 6 6-6" />
+        </svg>
+        <h3>Bolt group under eccentric load</h3>
+        <p>Shear and a moment in the plane of a bolt group: the force on every bolt by the elastic method, shear and bearing per bolt, and an FE of the plate.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="steel-fillet-weld.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <path d="M8 44h56M30 44V8M30 30l-14 14M30 30v14" /><path d="M30 30l-14 14h14z" />
+        </svg>
+        <h3>Fillet weld</h3>
+        <p>A fillet weld by the simplified method (force per length) or the directional method (stresses on the throat), with a section drawing.</p>
+        <p class="standards">EN 1993-1-8</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="steel-plate-tension.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="14" y="12" width="44" height="30" /><circle cx="36" cy="20" r="3" /><circle cx="36" cy="34" r="3" /><path d="M14 27H2M8 23l-6 4 6 4M58 27h12M64 23l6 4-6 4" />
+        </svg>
+        <h3>Plate in tension</h3>
+        <p>A steel plate with bolt holes in tension: gross and net section, with the yield and tensile strength by plate thickness.</p>
+        <p class="standards">EN 1993-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="tool-group" id="timber" aria-labelledby="group-timber">
+      <h2 class="group-title" id="group-timber">Timber</h2>
+      <div class="tool-grid">
       <a class="tool-card" href="steel-timber.html">
         <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
           <rect x="6" y="12" width="60" height="30" /><path d="M6 27h40" stroke-width="3" /><circle cx="22" cy="20" r="3" /><circle cx="36" cy="20" r="3" /><circle cx="22" cy="34" r="3" /><circle cx="36" cy="34" r="3" />
         </svg>
-        <h2>Steel-to-timber connection with bolts or dowels</h2>
+        <h3>Steel-to-timber connection with bolts or dowels</h3>
         <p>One plate, a slotted-in plate or two outer plates: Johansen failure modes, the effective number of fasteners, splitting and the steel side.</p>
         <p class="standards">EN 1995-1-1 · EN 1993-1-8</p>
         <span class="open">Open the check →</span>
       </a>
-
+      <a class="tool-card" href="timber-timber.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="10" width="60" height="12" /><rect x="6" y="24" width="60" height="12" /><rect x="6" y="38" width="60" height="10" /><path d="M24 6v46M48 6v46" />
+        </svg>
+        <h3>Timber-to-timber connection with nails, screws, bolts or dowels</h3>
+        <p>Nails, screws, bolts or dowels in single or double shear: Johansen failure modes with the rope effect, the effective number of fasteners, splitting and spacings, with an FE check of the fastener.</p>
+        <p class="standards">EN 1995-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="timber-connectors.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="20" width="60" height="26" /><path d="M24 6v30M20 6h8M24 36l-2 4M48 14v26" /><circle cx="48" cy="27" r="7" /><path d="M42 21l2 2M54 21l-2 2M42 33l2-2M54 33l-2-2" />
+        </svg>
+        <h3>Screws and toothed plates</h3>
+        <p>Axially loaded screws (withdrawal, head pull-through, screw tension) and toothed-plate connectors with their bolts.</p>
+        <p class="standards">EN 1995-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="contact-moment-joint.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="14" width="28" height="26" /><rect x="38" y="14" width="28" height="26" /><path d="M36 10v34M26 34l20-8M26 20l20 8" /><path d="M14 6c-6 5-6 12 0 17M58 6c6 5 6 12 0 17" />
+        </svg>
+        <h3>Timber contact moment joint</h3>
+        <p>A timber joint that carries a moment by contact in compression and screws in tension: the moment capacity at the entered axial force.</p>
+        <p class="standards">EN 1995-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
+      <a class="tool-card" href="eta-brackets.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <path d="M14 8v38h40" /><path d="M14 8h10v28h30v10" /><circle cx="19" cy="16" r="1.5" /><circle cx="19" cy="26" r="1.5" /><circle cx="34" cy="41" r="1.5" /><circle cx="44" cy="41" r="1.5" />
+        </svg>
+        <h3>Proprietary brackets and hangers</h3>
+        <p>Angle brackets and a beam hanger checked against the tables of their European Technical Assessment, only for the fastener layouts the ETA lists.</p>
+        <p class="standards">ETA product data · EN 1995-1-1</p>
+        <span class="open">Open the check →</span>
+      </a>
       <a class="tool-card" href="timber-bearing.html">
         <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
           <rect x="42" y="18" width="22" height="34" /><path d="M42 26h22M42 34h22M42 42h22M53 18v8M48 26v8M58 26v8M53 34v8M48 42v10M58 42v10" /><rect x="6" y="10" width="46" height="8" />
         </svg>
-        <h2>Timber beam bearing</h2>
+        <h3>Timber beam bearing</h3>
         <p>The end of a beam or joist on masonry (for instance in a pocket), on concrete or on steel: compression perpendicular to the grain and the load on the support below.</p>
         <p class="standards">EN 1995-1-1 · EN 1996-1-1</p>
         <span class="open">Open the check →</span>
       </a>
+      </div>
+    </section>
 
+    <section class="tool-group" id="masonry" aria-labelledby="group-masonry">
+      <h2 class="group-title" id="group-masonry">Masonry</h2>
+      <div class="tool-grid">
+      <a class="tool-card" href="masonry-fixings.html">
+        <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
+          <rect x="6" y="8" width="26" height="10" /><rect x="34" y="8" width="32" height="10" /><rect x="6" y="20" width="40" height="10" /><rect x="48" y="20" width="18" height="10" /><rect x="6" y="32" width="26" height="10" /><rect x="34" y="32" width="32" height="10" /><path d="M20 25h36" stroke-width="3" />
+        </svg>
+        <h3>Fixings in existing masonry</h3>
+        <p>Grouted pins in shear, bed-joint sliding, dead-weight uplift ties and pocket hold-downs in solid existing masonry, relying on bearing and weight only.</p>
+        <p class="standards">EN 1996-1-1 · EN 1990</p>
+        <span class="open">Open the check →</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="tool-group" aria-label="Validation">
+      <div class="tool-grid">
       <a class="tool-card tool-card-secondary" href="validation.html">
         <svg class="tool-icon" viewBox="0 0 72 54" aria-hidden="true" focusable="false">
           <rect x="14" y="6" width="44" height="44" /><path d="M22 18h28M22 28h28M22 38h16" /><path d="M44 38l4 4 8-10" stroke-width="3" />
         </svg>
-        <h2>Validation and scope</h2>
+        <h3>Validation and scope</h3>
         <p>What the checks have been compared with — published tests, closed-form solutions and hand calculations — and what they do not cover.</p>
         <span class="open">Read more →</span>
       </a>
+      </div>
     </section>
 
     <p class="on-request">Other connection types and project-specific verification are available on request — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>

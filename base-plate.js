@@ -1,7 +1,9 @@
-// Column base page: EN 1993-1-8 / EN 1992-4 check while typing (no FE).
+// Column base page: EN 1993-1-8 / EN 1992-4 check while typing, and the FE
+// verification of the base plate in a Web Worker (baseplate-fe.js).
 import { BASE_PLATE_FIELDS, checkBasePlate, normaliseBasePlateInput } from "./lib/index.js";
 import { basePlatePlanSvg, basePlateSectionSvg } from "./connection-drawings.js";
 import { mountCheckPage } from "./check-page.js";
+import { mountBasePlateFe } from "./baseplate-fe.js";
 
 mountCheckPage({
   fields: BASE_PLATE_FIELDS,
@@ -9,3 +11,5 @@ mountCheckPage({
   check: checkBasePlate,
   drawings: (input, result) => basePlatePlanSvg(input, result) + basePlateSectionSvg(input, result)
 });
+
+mountBasePlateFe();

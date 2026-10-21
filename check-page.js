@@ -30,10 +30,11 @@ function formHtml(fields) {
 }
 
 /**
- * config: { fields, normalise(raw), check(input), drawings(input, result) → HTML }
+ * config: { fields, normalise(raw), check(input), drawings(input, result) → HTML,
+ * onUpdate(input, result) (optional: called after every check, with nulls when the input is invalid) }
  */
 export function mountCheckPage(config) {
-  const { fields, normalise, check, drawings } = config;
+  const { fields, normalise, check, drawings, onUpdate = () => {} } = config;
   const form = $("[data-input-form]");
   const status = $("[data-form-status]");
   $("[data-fields]").innerHTML = formHtml(fields);
@@ -77,6 +78,7 @@ export function mountCheckPage(config) {
       status.innerHTML = `<ul>${normalised.errors.map(message => `<li>${escapeHtml(message)}</li>`).join("")}</ul>`;
       for (const target of ["[data-summary]", "[data-checks]", "[data-values]"]) $(target).innerHTML = "";
       document.body.dataset.checkStatus = "invalid";
+      onUpdate(null, null);
       return;
     }
     markInvalid([]);
@@ -87,6 +89,7 @@ export function mountCheckPage(config) {
     } catch (error) {
       status.innerHTML = `<p class="error">The check could not be completed: ${escapeHtml(error.message)}</p>`;
       document.body.dataset.checkStatus = "error";
+      onUpdate(null, null);
       return;
     }
     $("[data-drawings]").innerHTML = drawings(normalised.input, result);
@@ -96,6 +99,7 @@ export function mountCheckPage(config) {
     $("[data-assumptions]").innerHTML = notesHtml(result);
     document.body.dataset.checkStatus = result.status;
     document.body.dataset.maxUtilisation = result.maxUtilisation.toFixed(4);
+    onUpdate(normalised.input, result);
   }
 
   function setValues(values) {

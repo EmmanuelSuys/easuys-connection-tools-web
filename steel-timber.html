@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Steel-to-timber check | EA Suys</title>
-  <meta name="description" content="Steel-to-timber connection with bolts or dowels: EN 1995-1-1 and EN 1993-1-8 design check with drawing, in your browser. Feasibility prototype, not for design use.">
+  <meta name="description" content="Steel-to-timber connection with bolts or dowels: EN 1995-1-1 and EN 1993-1-8 design check with drawing and an FE check of the fastener, in your browser. Feasibility prototype, not for design use.">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dowel-fe.css">
 </head>
 <body>
   <header class="site-header">
@@ -13,10 +14,37 @@
     <span class="tool-name">Connection tools</span>
     <nav class="tool-nav" aria-label="Connection types">
       <a href="./">Overview</a>
-      <a href="t-stub.html">T-stub</a>
-      <a href="base-plate.html">Column base</a>
-      <a href="steel-timber.html" aria-current="page">Steel-to-timber</a>
-      <a href="timber-bearing.html">Timber bearing</a>
+      <details class="nav-group" name="tool-nav">
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav" data-current>
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html" aria-current="page">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
       <a href="validation.html">Validation</a>
     </nav>
   </header>
@@ -25,9 +53,9 @@
     <section class="intro">
       <h1>Steel-to-timber connection with bolts or dowels</h1>
       <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
-      <p>A timber member connected to one steel plate (single shear), a slotted-in plate or two outer plates (double shear) with bolts or dowels in rows parallel to the grain. The check covers the Johansen failure modes, the effective number of fasteners, splitting, the steel side and the minimum spacings and distances. Everything runs <em>in this browser</em>.</p>
+      <p>A timber member connected to one steel plate (single shear), a slotted-in plate or two outer plates (double shear) with bolts or dowels in rows parallel to the grain. The check covers the Johansen failure modes, the effective number of fasteners, splitting, the steel side and the minimum spacings and distances; an FE model of one fastener checks the Johansen value. Everything runs <em>in this browser</em>.</p>
       <div class="scope" role="note" aria-label="Scope of the check">
-        <div><p class="scope-title">Checked</p><ul><li>Johansen failure modes per shear plane (EN 1995-1-1 8.2.3), rope effect for bolts, effective number n<sub>ef</sub></li><li>Splitting (8.1.4), spacings and distances (Tables 8.4 and 8.5)</li><li>Steel side: bolt shear and bearing (EN 1993-1-8 Table 3.4)</li></ul></div>
+        <div><p class="scope-title">Checked</p><ul><li>Johansen failure modes per shear plane (EN 1995-1-1 8.2.3), rope effect for bolts, effective number n<sub>ef</sub></li><li>Splitting (8.1.4), spacings and distances (Tables 8.4 and 8.5)</li><li>Steel side: bolt shear and bearing (EN 1993-1-8 Table 3.4)</li><li>FE check of one fastener against the Johansen equations without the rope effect</li></ul></div>
         <div><p class="scope-title">Not checked</p><ul><li>Block shear and plug shear (EN 1995-1-1 Annex A), net sections of timber and plate, block tearing of the plate</li><li>Moments from eccentricity in the fastener group; hardwood (embedment strength for softwood only); fasteners over 30 mm</li></ul></div>
         <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
       </div>
@@ -60,6 +88,8 @@
       <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
       <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
     </section>
+
+    <section class="panel fe-dowel" aria-label="FE verification of the fastener" data-dowel-fe></section>
   </main>
 
   <footer class="site-footer">

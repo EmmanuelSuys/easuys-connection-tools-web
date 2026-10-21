@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beam-to-column end plate | EA Suys</title>
+  <meta name="description" content="Bolted beam-to-column end-plate moment connection check to EN 1993-1-8, with live drawings and row checks in your browser.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-endplate-type="column">
+  <header class="site-header">
+    <a class="brand" href="https://www.easuys.be/">EA Suys</a>
+    <span class="tool-name">Connection tools</span>
+    <nav class="tool-nav" aria-label="Connection types">
+      <a href="./">Overview</a>
+      <details class="nav-group" name="tool-nav" data-current>
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html" aria-current="page">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
+      <a href="validation.html">Validation</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Bolted beam-to-column end plate</h1>
+      <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
+      <p>Moment-resisting connection of a beam to the flange of a continuous, unstiffened I/H column. Set the beam, column, end plate, welds, bolt rows and design actions. The check updates as you edit the inputs.</p>
+      <div class="scope" role="note" aria-label="Scope of the check">
+        <div><p class="scope-title">Checked</p><ul><li>Column flange and end-plate T-stubs, bolt tension and beam web tension, individually and in row groups (EN 1993-1-8 Tables 6.2, 6.4 and 6.6; Figure 6.11)</li><li>Effective row resistances in sequence, compression-side limits and triangular distribution (6.2.7.2); column web panel, column web and beam compression; stiffness (6.3)</li><li>Two bolts per row; plate and weld detailing checks in the scope of the route</li><li>FE check of the end-plate tension zone in this browser: end plate with all tension rows, beam web and tension flange as shells with plasticity, bolt springs and contact on the column flange (rigid), at γ = 1 against the EN component model — a check of the model, not a design value</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Stiffeners, backing plates, a nearby column end, bolt shear, weld resistance or member design; shear and axial actions are not combined with moment</li><li>For a double-sided joint, moments of opposite sign need a separate column web panel check</li><li>FE of the column side (column flange, web and web panel) and of the compression side: EN model only</li></ul></div>
+        <p class="scope-link">Method and comparison evidence: <a href="validation.html">Validation and scope</a>.</p>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <form class="panel input-panel" data-input-form novalidate>
+        <div class="panel-heading"><h2>Input</h2><button type="button" class="link-button" data-reset>Reset to example</button></div>
+        <div data-fields></div><div class="form-status" data-form-status role="status" aria-live="polite"></div>
+      </form>
+      <section class="panel connection-panel" aria-label="Connection drawing"><h2>Connection</h2><div class="drawings" data-drawings></div></section>
+    </div>
+
+    <section class="panel" aria-label="Design check">
+      <div class="panel-heading"><h2>Design check — EN 1993-1-8</h2><button type="button" class="secondary" data-print>Print</button></div>
+      <div data-summary></div><div data-checks></div>
+      <details class="intermediate"><summary>Rows, groups and intermediate values</summary><div data-values></div></details>
+      <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
+    </section>
+
+    <section class="panel" aria-label="FE verification" data-fe-panel>
+      <div class="panel-heading">
+        <h2>FE verification of the tension zone (in this browser)</h2>
+        <div class="actions">
+          <button type="button" class="primary" data-run-fe>Run FE analysis</button>
+          <button type="button" class="secondary" data-cancel-fe hidden>Cancel</button>
+        </div>
+      </div>
+      <p class="note">Shell model of the end plate with all tension bolt rows, the beam web and the tension flange, with plasticity, bolt springs and contact on the column flange, taken as rigid. The beam end turns about the centre of compression step by step to 5&nbsp;% plastic strain or a bolt reaching 0.9&nbsp;f<sub>ub</sub>&nbsp;A<sub>s</sub> (the T-stub criterion). It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value.</p>
+      <div class="fe-options">
+        <label>Mesh size <select name="fe-meshSize"><option value="15">15 mm</option><option value="12.5">12.5 mm</option><option value="10">10 mm</option><option value="7.5">7.5 mm</option></select></label>
+        <label>Loading <select name="fe-loading"><option value="rotation">rotation about the centre of compression</option><option value="uniform">tension zone pulled as a whole</option></select></label>
+        <label>Flange displacement limit (mm) <input name="fe-displacementLimit" inputmode="decimal" size="5"></label>
+        <label>Load steps <input name="fe-loadSteps" inputmode="numeric" size="4"></label>
+      </div>
+      <p class="note" data-fe-dof></p>
+      <div class="progress" data-progress hidden>
+        <progress max="1" value="0" data-progress-bar></progress>
+        <span data-progress-text role="status" aria-live="polite"></span>
+      </div>
+      <div data-fe-output hidden>
+        <div class="fe-grid fe-wide">
+          <div data-fe-summary></div>
+          <div class="view-box">
+            <div class="view-controls">
+              <label>Magnification <input type="range" min="0" max="3" step="0.05" value="1" data-view-scale> <span data-view-scale-text></span></label>
+              <label><input type="checkbox" data-view-undeformed> undeformed</label>
+              <button type="button" class="link-button" data-view-reset>Reset view</button>
+            </div>
+            <div class="view3d-host" data-view3d title="Drag to rotate"></div>
+            <div data-view-legend></div>
+            <p class="note">Drag to rotate. End plate, beam web and tension flange at the resistance event; bolt forces in kN (red: bolt at 0.9 f<sub>ub</sub> A<sub>s</sub>).</p>
+          </div>
+        </div>
+        <h3>Moment and bolt-row forces</h3>
+        <div class="curve-host fe-charts" data-fe-curves></div>
+        <div data-fe-tables></div>
+        <details class="intermediate"><summary>FE model and settings</summary><div data-fe-model></div></details>
+        <details class="report-details">
+          <summary>Calculation report</summary>
+          <div class="downloads">
+            <button type="button" class="secondary" data-download-report>Download report (HTML)</button>
+            <button type="button" class="secondary" data-download-json>Download result (JSON)</button>
+          </div>
+          <iframe class="report-frame" title="FE calculation report" sandbox="" data-report-frame></iframe>
+        </details>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p></footer>
+  <script type="module" src="end-plate.js"></script>
+</body>
+</html>

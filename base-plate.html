@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Column base check | EA Suys</title>
-  <meta name="description" content="Pinned steel column base with cast-in anchors: EN 1993-1-8 and EN 1992-4 design check with drawing, in your browser. Feasibility prototype, not for design use.">
+  <meta name="description" content="Pinned steel column base with cast-in anchors: EN 1993-1-8 and EN 1992-4 design check with drawing, and a finite-element verification of the base plate that runs in your browser. Feasibility prototype, not for design use.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,10 +13,37 @@
     <span class="tool-name">Connection tools</span>
     <nav class="tool-nav" aria-label="Connection types">
       <a href="./">Overview</a>
-      <a href="t-stub.html">T-stub</a>
-      <a href="base-plate.html" aria-current="page">Column base</a>
-      <a href="steel-timber.html">Steel-to-timber</a>
-      <a href="timber-bearing.html">Timber bearing</a>
+      <details class="nav-group" name="tool-nav" data-current>
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html" aria-current="page">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
       <a href="validation.html">Validation</a>
     </nav>
   </header>
@@ -25,10 +52,10 @@
     <section class="intro">
       <h1>Pinned column base with cast-in anchors</h1>
       <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The calculation has not been validated for design decisions.</p>
-      <p>A steel column (I/H or hollow section) on a base plate, grout and a concrete foundation, with four headed anchor bolts in two rows beyond the column. Two load cases: compression with shear, and uplift with shear. The check covers the concrete in compression, the base plate and anchors in tension, shear by friction and anchors, the anchorage in concrete and the column weld. Everything runs <em>in this browser</em>.</p>
+      <p>A steel column (I/H or hollow section) on a base plate, grout and a concrete foundation, with four headed anchor bolts in two rows beyond the column. Two load cases: compression with shear, and uplift with shear. The check covers the concrete in compression, the base plate and anchors in tension, shear by friction and anchors, the anchorage in concrete and the column weld; a finite-element model of the base plate checks the uplift resistance of the component model. Everything runs <em>in this browser</em>.</p>
       <div class="scope" role="note" aria-label="Scope of the check">
-        <div><p class="scope-title">Checked</p><ul><li>Concrete in compression under the plate (EN 1993-1-8 6.2.5, 6.2.8.2; α from EN 1992-1-1 6.7)</li><li>Uplift: base plate and anchors (6.2.6.11, Table 6.2); shear by friction and anchors (6.2.2)</li><li>Anchorage per EN 1992-4 (steel, pull-out, cone, pry-out, concrete edge), column weld, detailing</li></ul></div>
-        <div><p class="scope-title">Not checked</p><ul><li>Fixed bases (moment at the base), post-installed anchors, blow-out, anchor reinforcement</li><li>The column, the foundation and its reinforcement</li></ul></div>
+        <div><p class="scope-title">Checked</p><ul><li>Concrete in compression under the plate (EN 1993-1-8 6.2.5, 6.2.8.2; α from EN 1992-1-1 6.7)</li><li>Uplift: base plate and anchors (6.2.6.11, Table 6.2); shear by friction and anchors (6.2.2)</li><li>Anchorage per EN 1992-4 (steel, pull-out, cone, pry-out, concrete edge), column weld, detailing</li><li>FE shell model of plate, column stub, anchors and contact, as a cross-check of the uplift resistance at γ = 1 (compression: indicative)</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Fixed bases (moment at the base), post-installed anchors, blow-out, anchor reinforcement</li><li>The column, the foundation and its reinforcement</li><li>In the FE model: the anchorage in concrete, the welds, anchor bending and shear</li></ul></div>
         <p class="scope-link">What the tools have been compared with, and the limits: <a href="validation.html">Validation and scope</a>.</p>
       </div>
       <p class="on-request"><strong>Available on request:</strong> fixed bases, other connection types and project-specific verification, for project use under licence or subscription — contact <a href="https://www.easuys.be/">EA Suys</a>.</p>
@@ -60,6 +87,63 @@
       <details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details>
       <details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details>
     </section>
+
+    <section class="panel" aria-label="FE verification" data-fe-panel>
+      <div class="panel-heading">
+        <h2>FE verification (in this browser)</h2>
+        <div class="actions">
+          <button type="button" class="primary" data-run-fe>Run FE analysis</button>
+          <button type="button" class="secondary" data-cancel-fe hidden>Cancel</button>
+        </div>
+      </div>
+      <p class="note">Shell model of the base plate and the column stub with plasticity, anchors as tension springs (elastic length L<sub>b</sub>, yield at 0.9&nbsp;f<sub>ub</sub>&nbsp;A<sub>s</sub>) and contact on a rigid support, loaded step by step to 5&nbsp;% plastic strain or anchor yield. It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value. The design actions above are not used. Where the 5&nbsp;% strain is reached at the corner of the column flange or wall weld, the FE value depends on the mesh (lower with a finer mesh); the report says so. <span data-fe-dof></span></p>
+      <div class="fe-settings" style="max-width: 780px">
+        <fieldset>
+          <legend>Load case</legend>
+          <label><input type="radio" name="fe-loadCase" value="uplift" checked> Uplift: base plate in bending and anchors (EN 1993-1-8 6.2.6.11)</label><br>
+          <label><input type="radio" name="fe-loadCase" value="compression"> Compression, indicative: contact pressure on an elastic bed against the EN effective area (6.2.5)</label>
+        </fieldset>
+        <details class="advanced">
+          <summary>FE settings</summary>
+          <div class="field"><label for="fe-meshSize">Mesh size (empty: m<sub>x</sub>/3, 5 to 15 mm)</label><input id="fe-meshSize" name="fe-meshSize" inputmode="decimal" autocomplete="off" placeholder="auto"><span class="unit">mm</span></div>
+          <div class="field"><label for="fe-displacementLimit">Displacement limit of the column (empty: automatic)</label><input id="fe-displacementLimit" name="fe-displacementLimit" inputmode="decimal" autocomplete="off" placeholder="auto"><span class="unit">mm</span></div>
+          <div class="field"><label for="fe-loadSteps">Load steps</label><input id="fe-loadSteps" name="fe-loadSteps" inputmode="numeric" autocomplete="off" placeholder="24"><span class="unit">—</span></div>
+        </details>
+        <div class="form-status" data-fe-status role="status" aria-live="polite"></div>
+      </div>
+      <div class="progress" data-progress hidden>
+        <progress max="1" value="0" data-progress-bar></progress>
+        <span data-progress-text role="status" aria-live="polite"></span>
+      </div>
+      <div data-fe-output hidden>
+        <div class="fe-grid">
+          <div data-fe-summary></div>
+          <div class="view-box">
+            <div class="view-controls">
+              <label>Magnification <input type="range" min="0" max="3" step="0.05" value="1" data-view-scale> <span data-view-scale-text></span></label>
+              <label><input type="checkbox" data-view-undeformed> undeformed</label>
+              <button type="button" class="link-button" data-view-reset>Reset view</button>
+            </div>
+            <div class="view3d-host" data-view3d title="Drag to rotate"></div>
+            <div data-view-legend></div>
+            <p class="note">Drag to rotate. Whole base drawn from the quarter model; anchor forces in kN at the resistance event (red: anchor at 0.9 f<sub>ub</sub> A<sub>s</sub>).</p>
+          </div>
+        </div>
+        <div data-bearing></div>
+        <h3>Force–displacement curve</h3>
+        <div class="curve-host" data-curve></div>
+        <details class="report-details">
+          <summary>Calculation report</summary>
+          <div class="downloads">
+            <button type="button" class="secondary" data-download-report>Download report (HTML)</button>
+            <button type="button" class="secondary" data-download-json>Download result (JSON)</button>
+          </div>
+          <iframe class="report-frame" title="FE calculation report" sandbox="" data-report-frame></iframe>
+        </details>
+      </div>
+    </section>
+
+    <pre class="selftest" id="selftest-output" data-selftest hidden></pre>
   </main>
 
   <footer class="site-footer">

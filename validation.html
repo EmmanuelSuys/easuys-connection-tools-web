@@ -13,10 +13,37 @@
     <span class="tool-name">Connection tools</span>
     <nav class="tool-nav" aria-label="Connection types">
       <a href="./">Overview</a>
-      <a href="t-stub.html">T-stub</a>
-      <a href="base-plate.html">Column base</a>
-      <a href="steel-timber.html">Steel-to-timber</a>
-      <a href="timber-bearing.html">Timber bearing</a>
+      <details class="nav-group" name="tool-nav">
+        <summary>Steel</summary>
+        <div class="nav-menu">
+          <a href="t-stub.html">Bolted T-stub</a>
+          <a href="base-plate.html">Column base</a>
+          <a href="end-plate-column.html">End plate, beam to column</a>
+          <a href="end-plate-splice.html">End-plate beam splice</a>
+          <a href="end-plate-web.html">Double-sided web connection</a>
+          <a href="steel-lap-joint.html">Bolted lap joint</a>
+          <a href="steel-bolt-group.html">Bolt group, eccentric load</a>
+          <a href="steel-fillet-weld.html">Fillet weld</a>
+          <a href="steel-plate-tension.html">Plate in tension</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Timber</summary>
+        <div class="nav-menu">
+          <a href="steel-timber.html">Steel-to-timber</a>
+          <a href="timber-timber.html">Timber-to-timber</a>
+          <a href="timber-connectors.html">Screws and toothed plates</a>
+          <a href="contact-moment-joint.html">Contact moment joint</a>
+          <a href="eta-brackets.html">Brackets and hangers (ETA)</a>
+          <a href="timber-bearing.html">Timber beam bearing</a>
+        </div>
+      </details>
+      <details class="nav-group" name="tool-nav">
+        <summary>Masonry</summary>
+        <div class="nav-menu">
+          <a href="masonry-fixings.html">Fixings in existing masonry</a>
+        </div>
+      </details>
       <a href="validation.html" aria-current="page">Validation</a>
     </nav>
   </header>
@@ -40,15 +67,40 @@
             <td>FE / EN = 0.91, 0.95 and 1.00, with the same failure mode (1, 2, 3)</td></tr>
           <tr><td>Two published tests: Bursi and Jaspart (1995), T-stubs T1 and T2</td>
             <td>See <a href="#tstub-tests">below</a></td></tr>
-          <tr><th scope="row"><a href="base-plate.html">Column base</a></th>
-            <td rowspan="3">Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
+          <tr><th scope="row" rowspan="2"><a href="base-plate.html">Column base</a></th>
+            <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
             <td>The page examples equal the hand calculations. Column base: the earlier calculations used other assumptions for some steps; these differences are recorded and under review.</td></tr>
-          <tr><th scope="row"><a href="steel-timber.html">Steel-to-timber</a></th>
-            <td rowspan="2">The page examples equal the hand calculations. Where the method is the same, the timber, bolt and masonry values equal the earlier calculations.</td></tr>
-          <tr><th scope="row"><a href="timber-bearing.html">Timber bearing</a></th></tr>
+          <tr><td>FE check of the base plate in uplift against the EN T-stub (at γ = 1): plate strips with one and with two plastic hinges (closed form), a thick plate where the anchors govern, the page example on three meshes</td>
+            <td>Strips: FE / EN = 0.99 and 0.98 (extrapolated over three meshes); anchors governing: 1.000. Where the plate governs, the FE result falls by 10–20 % per halving of the mesh (strain peak at the weld corner): FE / EN is then indicative only, and the page says so.</td></tr>
+          <tr><th scope="row" rowspan="2"><a href="steel-timber.html">Steel-to-timber</a></th>
+            <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
+            <td>The page examples equal the hand calculations. Where the method is the same, the timber, bolt and masonry values equal the earlier calculations.</td></tr>
+          <tr><td>FE of the fastener (steel-to-timber and timber-to-timber pages) against the rigid-plastic Johansen limit loads: 23 cases covering every failure mode of EN 1995-1-1 8.6 to 8.13</td>
+            <td>23 of 23 within 0.2 % (largest 0.026 %) with the same mechanism. Where EN applies its calibration factors (1.05, 1.15) FE / EN is 1/1.05 or 1/1.15; the page states why. With a finite embedment stiffness the collapse load is unchanged.</td></tr>
+          <tr><th scope="row"><a href="timber-bearing.html">Timber bearing</a></th>
+            <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
+            <td>The page examples equal the hand calculations. Where the method is the same, the timber, bolt and masonry values equal the earlier calculations.</td></tr>
+          <tr><th scope="row"><a href="timber-timber.html">Timber-to-timber</a></th>
+            <td>Four independent hand calculations (bolts at 30° with the capped rope effect, nails with the Table 8.1 reduction, the page example, bolts at 90° where splitting governs)</td>
+            <td>Equal to better than 0.001 N.</td></tr>
+          <tr><th scope="row" rowspan="3">End plates: <a href="end-plate-column.html">beam to column</a>, <a href="end-plate-splice.html">splice</a>, <a href="end-plate-web.html">beam web</a></th>
+            <td>The EN 1993-1-8 end-plate routes of the EA Suys structural tools: 9 reference cases, 43 rejected inputs and 270 random geometries</td>
+            <td>All results equal (to 1 Nmm); the same inputs are rejected.</td></tr>
+          <tr><td>Seven independent hand calculations of M<sub>j,Rd</sub> and the published SCI P398 Example C.1</td>
+            <td>Equal within 0.001 kNm.</td></tr>
+          <tr><td>FE check of the end-plate tension zone against the EN component model (at γ = 1, default 10 mm mesh): one row against the T-stub FE, a two-row group, the three page examples, three meshes</td>
+            <td>Rows governed by the bolts within 0.1 %; one row equal to the T-stub FE; two-row group FE / EN = 0.96; page examples 0.90 (beam to column, end-plate side only), 0.94 (splice) and 1.07 (beam web). Results governed by the strain limit depend on the mesh; the page then warns.</td></tr>
+          <tr><th scope="row" rowspan="2">Basic steel: <a href="steel-lap-joint.html">lap joint</a>, <a href="steel-bolt-group.html">bolt group</a>, <a href="steel-fillet-weld.html">fillet weld</a>, <a href="steel-plate-tension.html">plate in tension</a></th>
+            <td>The corresponding routes of the EA Suys structural tools (21 reference files with 306 values, 639 random and edge-case inputs, 123 rejections) and 13 independent hand calculations</td>
+            <td>All equal.</td></tr>
+          <tr><td>Elastic bolt-force FE (lap joint and bolt group) against a patch test, a cantilever (Timoshenko), a bar-and-spring model of a lap joint and the elastic polar method for bolt groups</td>
+            <td>Patch test exact; cantilever −0.11 %; lap joints within 1.0 %; bolt groups within 0.4 %. The elastic peak on the end row of a long joint exceeds what the EN long-joint factor allows: EN relies on plastic redistribution, so the FE shows a distribution, not a resistance.</td></tr>
+          <tr><th scope="row"><a href="timber-connectors.html">Screws and toothed plates</a>, <a href="contact-moment-joint.html">contact moment joint</a>, <a href="eta-brackets.html">ETA brackets</a>, <a href="masonry-fixings.html">fixings in masonry</a></th>
+            <td>22 independent hand calculations (screws 2, toothed plates 2, contact joint 2, ETA brackets 6, masonry 10) and the earlier EA Suys calculation scripts (635 ETA and 424 masonry records)</td>
+            <td>All equal. The earlier screw and toothed-plate scripts were not used as a reference, because the review found formula errors in them; these have been corrected.</td></tr>
         </tbody>
       </table></div>
-      <p class="note">These comparisons run as automated tests with every change of the tools. The column base, steel-to-timber and timber bearing checks have not been compared with physical tests.</p>
+      <p class="note">These comparisons run as automated tests with every change of the tools. Apart from the T-stub, none of the checks has been compared with physical tests. The finite-element checks run at γ = 1 and are a cross-check of the EN model, not a design resistance.</p>
     </section>
 
     <section class="panel" id="tstub-tests" aria-labelledby="tests-heading">
