@@ -4,7 +4,7 @@ import { InputError, runBasePlateFeBrowser } from "./baseplate-fe-core.js";
 self.onmessage = async event => {
   try {
     const result = await runBasePlateFeBrowser(event.data.input, event.data.options, {
-      onProgress: (step, stepCount, displacement) => self.postMessage({ type: "progress", step, stepCount, displacement })
+      onProgress: (step, stepCount, displacement, progress) => self.postMessage({ type: "progress", step, stepCount, displacement, progress })
     });
     self.postMessage({ type: "done", result });
   } catch (error) {

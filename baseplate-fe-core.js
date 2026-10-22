@@ -115,11 +115,10 @@ export function summaryRows(result) {
     [`EN component model (γ = 1)${uplift ? `, ${escapeHtml(result.en.mode)}${t.prying ? "" : " (no prying: L<sub>b</sub> &gt; L<sub>b</sub>*)"}` : ", N<sub>c,Rk</sub> = A<sub>eff</sub> f<sub>jd</sub>"}`, kN(result.en.resistance), "kN"],
     ["FE / EN", fixed(result.ratio, 3), "", true],
     ["FE failure mode", escapeHtml(result.fe.mode), ""],
-    ...(result.fe.event === "strain" ? [[`Peak plastic strain at (x, y) of the quarter${result.fe.peakStrain.atZoneCorner ? ", corner of the stiff zone" : ""}`, `${fixed(result.fe.peakStrain.x, 0)}, ${fixed(result.fe.peakStrain.y, 0)}`, "mm"]] : []),
+    ...(result.fe.event === "limit load" ? [[`Peak plastic strain at (x, y) of the quarter${result.fe.peakStrain.atZoneCorner ? ", corner of the stiff zone" : ""}`, `${fixed(result.fe.peakStrain.x, 0)}, ${fixed(result.fe.peakStrain.y, 0)}`, "mm"]] : []),
     ["Displacement of the column at the event", fixed(result.fe.failureDisplacement, 2), "mm"]
   ];
   if (uplift) {
-    if (!t.prying) items.splice(2, 0, [`For reference: EN Table 6.2 with prying, ${escapeHtml(result.en.withPrying.mode)}`, kN(result.en.withPrying.resistance), "kN"]);
     items.push(["Anchor force, each of 4 (FE / capacity 0.9 f<sub>ub</sub> A<sub>s</sub>)", `${kN(result.anchorForce)} / ${kN(result.anchorCapacity)}`, "kN"]);
     items.push([`EN anchor force at the EN resistance${t.prying ? " (upper bound with prying)" : ""}`, kN(result.en.anchorForce), "kN"]);
     items.push(["Prying force (contact under the plate, total)", kN(result.contactForce), "kN"]);
@@ -129,6 +128,10 @@ export function summaryRows(result) {
     items.push(["Peak contact pressure / f<sub>jd</sub>", `${fixed(b.peakPressure, 1)} / ${fixed(b.fjd, 1)}`, "MPa"]);
     items.push(["Contact area / EN A<sub>eff</sub>", `${fixed(b.contactArea / 100, 0)} / ${fixed(b.Aeff / 100, 0)}`, "cm²"]);
   }
+  items.push(["Support modulus k<sub>0</sub> / k (selected run)", `${fixed(result.supportModulus.k0, 3)} / ${fixed(result.supportModulus.k, 3)}`, "N/mm³"]);
+  items.push(["FE grout t<sub>g</sub> / assumed E<sub>g</sub>", `${fixed(result.options.groutThickness, 1)} mm / ${fixed(result.options.groutE, 0)} MPa`, ""]);
+  items.push(["Elastic stiffness K<sub>e</sub>", fixed(result.limitLoad.Ke / 1000, 2), "kN/mm"]);
+  items.push(["5 % peak strain (information)", result.strain5 ? `${kN(result.strain5.F)} kN at ${fixed(result.strain5.u, 3)} mm` : "not reached", ""]);
   items.push(["Maximum plastic strain: plate / stiff zone / column", `${fixed(100 * result.strainByKind.plate, 2)} / ${fixed(100 * result.strainByKind.stiff, 2)} / ${fixed(100 * result.strainByKind.wall, 2)}`, "%"]);
   items.push([`Equilibrium gate (|column − springs| ≤ ${fixed(result.equilibrium.tolerance, 0)} N)`, `${result.equilibrium.pass ? "pass" : "FAIL"}, ${fixed(result.equilibrium.error, 3)} N`, ""]);
   items.push(["Model size; load steps", `${result.dofCount.toLocaleString("en")} DOF; ${result.steps}`, ""]);
@@ -140,6 +143,15 @@ export function summaryRows(result) {
 export function summaryTableHtml(result) {
   const body = summaryRows(result).map(([label, value, unit, key]) => `<tr${key ? " class=\"key\"" : ""}><th>${label}</th><td class="num">${value}${unit ? ` ${escapeHtml(unit)}` : ""}</td></tr>`).join("");
   return `<div class="table-wrap"><table class="results-table"><tbody>${body}</tbody></table></div>`;
+}
+
+/** Like-for-like uplift comparisons, shared by the page and printable report. */
+export function pryingPairsTableHtml(result) {
+  if (!result.pairs) return "";
+  const body = result.pairs.map(pair => `<tr data-support="${pair.support}"${pair.support === result.enApplies ? ' class="key"' : ""}><th>${pair.support === "prying" ? "Support under plate (prying possible)" : "Plate free (no prying)"}${pair.support === result.enApplies ? " — EN applies" : ""}</th><td class="num">${pair.fe.event === "none" ? "≥ " : ""}${kN(pair.fe.resistance)}</td><td class="num">${kN(pair.en.resistance)}</td><td class="num">${pair.fe.event === "none" ? "≥ " : ""}${fixed(pair.ratio, 3)}</td><td>FE: ${escapeHtml(pair.fe.mode)}; EN: ${escapeHtml(pair.en.mode)}</td></tr>`).join("");
+  const support = result.pairs.find(pair => pair.support === "prying").supportModulus;
+  const warnings = result.pairs.filter(pair => pair.fe.event === "none").map(pair => `<p class="warning">${pair.support === "prying" ? "Supported" : "Free"} run: no limit load or anchor event within ${fixed(result.options.displacementLimit, 1)} mm; FE and FE/EN are lower bounds.</p>`).join("");
+  return `<h3>Uplift: like-for-like FE / EN (γ = 1)</h3><div class="table-wrap"><table class="results-table"><thead><tr><th>Support</th><th>FE (kN)</th><th>EN (kN)</th><th>FE/EN</th><th>Mode</th></tr></thead><tbody>${body}</tbody></table></div><p class="note">EN 1993-1-8 Table 6.2: L<sub>b</sub> ≤ L<sub>b</sub>* means prying (${fixed(result.en.tension.Lb, 1)} / ${fixed(result.en.tension.LbStar, 1)} mm). The summary, view and curve use the marked pair. Supported run: k<sub>0</sub> = ${fixed(support.k0, 3)}, k = ${fixed(support.k, 3)} N/mm³; free run: k = 0.</p>${warnings}`;
 }
 
 function inputRowsHtml(input) {
@@ -158,7 +170,8 @@ function enSectionHtml(result) {
       ["L<sub>b</sub>; L<sub>b</sub>*", `${fixed(t.Lb, 0)}; ${fixed(t.LbStar, 0)}`, "mm"],
       [t.prying ? "F<sub>T,1</sub>; F<sub>T,2</sub>; F<sub>T,3</sub> per row (prying)" : "F<sub>T,1-2</sub>; F<sub>T,3</sub> per row (no prying)", t.prying ? `${kN(t.FT1)}; ${kN(t.FT2)}; ${kN(t.FT3)}` : `${kN(t.FT12)}; ${kN(t.FT3)}`, "kN"],
       [`N<sub>t,Rk</sub> = 2 F<sub>T</sub> (${escapeHtml(t.mode)})`, kN(t.NtRd), "kN", true],
-      ["For reference, Table 6.2 with prying (both rows): F<sub>T,1</sub>; F<sub>T,2</sub>; F<sub>T,3</sub>", `${kN(result.en.withPrying.FT1)}; ${kN(result.en.withPrying.FT2)}; ${kN(result.en.withPrying.FT3)}`, "kN"]
+      ["Table 6.2 with prying (both rows): F<sub>T,1</sub>; F<sub>T,2</sub>; F<sub>T,3</sub>", `${kN(result.en.withPrying.FT1)}; ${kN(result.en.withPrying.FT2)}; ${kN(result.en.withPrying.FT3)}`, "kN"],
+      ["Table 6.2 without prying (both rows): F<sub>T,1-2</sub>; F<sub>T,3</sub>", `${kN(result.en.withoutPrying.FT12)}; ${kN(result.en.withoutPrying.FT3)}`, "kN"]
     ])}</tbody></table></div>`;
   }
   return `<p>Concrete and grout in compression, EN 1993-1-8 6.2.5 and 6.2.8.2 with γ<sub>c</sub> = 1, α<sub>cc</sub> = 1, γ<sub>M0</sub> = 1.</p>
@@ -172,16 +185,18 @@ function enSectionHtml(result) {
 
 function modelSectionHtml(result) {
   const o = result.options;
+  const support = result.pairs?.find(pair => pair.support === "prying").supportModulus ?? result.supportModulus;
   const items = [
     "Quarter of the doubly symmetric base: four-node shells (MITC4) with layered plane-stress plasticity, E = " + o.E + " MPa, ν = " + o.nu + ", E<sub>t</sub> = " + fixed(o.Et, 0) + " MPa, characteristic f<sub>y</sub>; small displacements.",
     "Base plate as shells; under the column walls and their fillet welds (0.8 a√2 beyond each face, as EN measures m) a stiff zone of " + o.stiffZoneFactor + " t<sub>p</sub>.",
     "Column flanges and web, or walls, as vertical shells of height " + fixed(o.columnHeight, 0) + " mm on their mid-planes, loaded by a uniform displacement of their top edge" + (result.loadCase === "compression" ? " (elastic in the compression case: the column is not checked)." : "."),
     "Anchors: tension-only springs E A<sub>s</sub> / L<sub>b</sub> = " + fixed(result.anchor.stiffness / 1000, 1) + " kN/mm (L<sub>b</sub> = " + fixed(result.anchor.Lb, 0) + " mm, EN 1993-1-8 6.2.6.12), capped at 0.9 f<sub>ub</sub> A<sub>s</sub>, spread over a square of the washer area (side " + fixed(result.anchor.washerSide, 1) + " mm).",
     result.loadCase === "uplift"
-      ? "Support: compression-only contact on a rigid plane (penalty 4000 N/mm³ × tributary area, as the T-stub model)."
-      : `Support: elastic bed E<sub>cm</sub> / (1.275 √A<sub>eff</sub>) = ${fixed(result.bed.modulus, 1)} N/mm³ (EN 1993-1-8 Table 6.11), compression only, capped at f<sub>jd</sub> = ${fixed(result.bed.pressure, 1)} MPa.`,
+      ? `Two runs: compression-only support under the plate (original k<sub>0</sub> = ${fixed(support.k0, 3)} N/mm³), and a free plate with no support. Each is compared with the corresponding Table 6.2 value.`
+      : `Support: elastic bed, original k<sub>0</sub> = E<sub>cm</sub> / (1.275 √A<sub>eff</sub>) = ${fixed(support.k0, 3)} N/mm³ (EN 1993-1-8 Table 6.11), compression only, capped at f<sub>jd</sub> = ${fixed(result.bed.pressure, 1)} MPa.`,
+    `Grout t<sub>g</sub> = ${fixed(o.groutThickness, 1)} mm, assumed E<sub>g</sub> = ${fixed(o.groutE, 0)} MPa: k = 1 / (1/k<sub>0</sub> + t<sub>g</sub>/E<sub>g</sub>) = ${fixed(support.k, 3)} N/mm³; at 0 mm k = k<sub>0</sub> exactly. The pressure cap f<sub>jd</sub> is unchanged; EN's β<sub>j</sub> covers grout quality.`,
     `Mesh size ${fixed(o.meshSize / o.meshRefinement, 1)} mm${o.meshSizeAuto ? " (automatic: m<sub>x</sub>/3)" : ""}; ${o.loadSteps} displacement steps up to ${fixed(o.displacementLimit, 1)} mm${o.displacementLimitAuto ? " (automatic)" : ""}, Newton iterations capped at 35 with up to 8 step bisections; a step that does not converge stops the analysis.`,
-    "Resistance criterion: 5 % equivalent plastic strain or anchor yield, interpolated to the event (as the T-stub FE)."
+    "FE resistance = limit load where the force-displacement curve flattens (twice-elastic-slope rule); 5 % strain is shown for information. An earlier anchor capacity event governs."
   ];
   return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
 }
@@ -192,10 +207,10 @@ function curveTableHtml(result) {
 
 const LIMITATIONS = [
   "The FE model checks the steel part: plate, anchor steel and contact. The anchorage in concrete (cone, pull-out, splitting, edge), the welds, the column and the foundation are not part of it.",
-  "Small-displacement shells, elastic transverse shear, no geometric nonlinearity, no anchor holes, no anchor bending, no fracture; rigid support in the uplift case.",
-  "Seven-point through-thickness integration: a fully plastic section carries 0.960 of t² f<sub>y</sub>/4 in the shells (conservative); with E<sub>t</sub> = E/1000 the 5 % event lies about 3 % above the plastic moment.",
-  "The 5 % plastic strain is a criterion at element level. Where it is reached at a corner of the stiff zone (flange tip or wall end with its weld), the strain concentration grows with mesh refinement and the FE resistance does not converge: about 10 to 20 % lower per halving of the mesh in the validation runs. Plate strips without such a corner converge at first order to the plastic resistance.",
-  "Compression case: indicative only; Winkler bed with a pressure cap, not a model of the grout and concrete.",
+  "Small-displacement shells, elastic transverse shear, no geometric nonlinearity, no anchor holes, no anchor bending, no fracture; uplift compares a compression-only support and a free plate.",
+  "Seven-point through-thickness integration: a fully plastic section carries 0.960 of t² f<sub>y</sub>/4 in the shells (conservative); hardening E<sub>t</sub> = E/1000 is retained in the force-displacement path.",
+  "Peak plastic strain at weld or stiff-zone corners can grow with mesh refinement. The 5 % crossing is information only; resistance uses the twice-elastic-slope limit load or an earlier anchor capacity event.",
+  "Compression case: indicative only; Winkler bed with a pressure cap and an optional elastic grout layer in series; concrete and grout are not modelled as solids.",
   "These results are a feasibility prototype and are not validated for design use."
 ];
 
@@ -207,7 +222,7 @@ export function renderBasePlateFeReport(result, { input, viewHtml, bearingHtml, 
     ["Input", `<div class="table-wrap"><table><thead><tr><th>Field</th><th>Value</th><th>Unit</th></tr></thead><tbody>${inputRowsHtml(input)}</tbody></table></div><p class="note">The design actions of the input are not used by the FE run; the analysis loads the base to its resistance.</p>`],
     [`EN component model at γ = 1`, enSectionHtml(result)],
     ["FE model", modelSectionHtml(result)],
-    ["FE result", `${summaryTableHtml(result)}${result.warnings.map(text => `<p class="warning">${escapeHtml(text)}</p>`).join("")}`],
+    ["FE result", `${pryingPairsTableHtml(result)}${summaryTableHtml(result)}${result.warnings.map(text => `<p class="warning">${escapeHtml(text)}</p>`).join("")}`],
     ["Deformed shape at the resistance event", viewHtml],
     ...(bearingHtml ? [["Contact pressure under the plate", bearingHtml]] : []),
     ["Force–displacement curve", `<p class="note">Column force against the displacement of the column top; dashed: EN resistance; marker: FE resistance event.</p>${makeCurveSvg(result)}${curveTableHtml(result)}`],
@@ -224,13 +239,14 @@ ${sections.map(([heading, html], index) => `<section><h2>${index + 1} ${escapeHt
 
 /**
  * Runs the column base FE on raw page values and renders the view, map and
- * report. onProgress(step, stepCount, displacement) after each load step.
+ * report. onProgress(step, stepCount, displacement, progress) after each load step;
+ * step/count span both uplift runs, progress identifies the run and support.
  */
 export async function runBasePlateFeBrowser(rawInput, rawOptions = {}, { onProgress = () => {}, calculatedIn = "browser" } = {}) {
   const { input, options } = validateBasePlateFe(rawInput, rawOptions);
   const result = analyseBasePlateFe(input, options, {
     includeField: true,
-    onStep: (point, step, stepCount) => onProgress(step, stepCount, Math.abs(point.displacement))
+    onStep: (point, step, stepCount, progress) => onProgress((progress.run - 1) * stepCount + step, progress.runCount * stepCount, Math.abs(point.displacement), progress)
   });
   const generatedAt = new Date().toISOString();
   const inputSha256 = await sha256(canonicalJson({ input, options: result.options, version: result.version }));

@@ -2,7 +2,7 @@
 // equivalent plastic strain, bolts with their forces, the rigid support and
 // the load. Orthographic projection with painter's sorting; no DOM access.
 
-const STRAIN_LIMIT = 0.05; // resistance criterion: 5 % plastic strain
+const STRAIN_LIMIT = 0.05; // informational plastic-strain colour scale
 
 const f1 = value => Number(value.toFixed(2)).toString();
 
@@ -104,7 +104,8 @@ export function fieldSvg(field, view) {
   const plane = [[-b2, ymin - 0.1 * (ymax - ymin)], [b2, ymin - 0.1 * (ymax - ymin)], [b2, ymax + 0.1 * (ymax - ymin)], [-b2, ymax + 0.1 * (ymax - ymin)]]
     .map(([x, y]) => project(x, y, -view.tf / 2));
   const parts = [];
-  parts.push(`<polygon points="${plane.map(p => `${f1(p[0])},${f1(-p[1])}`).join(" ")}" fill="#e7ebef" stroke="#b6c0ca" stroke-width="${f1(stroke * 2)}"/>`);
+  const columnSide = field.regions.includes(2);
+  if (!columnSide) parts.push(`<polygon points="${plane.map(p => `${f1(p[0])},${f1(-p[1])}`).join(" ")}" fill="#e7ebef" stroke="#b6c0ca" stroke-width="${f1(stroke * 2)}"/>`);
   if (view.showUndeformed) {
     const und = model.nodes.map(p => project(p[0], p[1], p[2]));
     for (const q of model.quads) parts.push(`<polygon points="${q.nodes.map(n => `${f1(und[n][0])},${f1(-und[n][1])}`).join(" ")}" fill="none" stroke="#8a97a5" stroke-width="${f1(stroke)}" stroke-dasharray="${f1(stroke * 4)} ${f1(stroke * 3)}"/>`);
@@ -123,7 +124,8 @@ export function fieldSvg(field, view) {
     const i = nearest(bolt.x, bolt.y);
     const topZ = view.tf / 2 + view.scale * model.disp[i][2] + 0.25 * view.hw * 0.4;
     const top = project(bolt.x, bolt.y, topZ);
-    const bottom = project(bolt.x, bolt.y, -view.tf / 2 - 0.25 * view.hw);
+    const columnNode = columnSide ? model.nodes.findIndex(p => Math.abs(p[0] - bolt.x) < 1e-6 && Math.abs(p[1] - bolt.y) < 1e-6 && p[2] < -1e-6) : -1;
+    const bottom = columnNode >= 0 ? project(bolt.x, bolt.y, model.nodes[columnNode][2] + view.scale * model.disp[columnNode][2] - 0.25 * view.hw) : project(bolt.x, bolt.y, -view.tf / 2 - 0.25 * view.hw);
     const ratio = bolt.capacity > 0 ? bolt.force / bolt.capacity : 0;
     const colour = ratio >= 0.999 ? "#b91c1c" : "#374151";
     parts.push(`<line x1="${f1(top[0])}" y1="${f1(-top[1])}" x2="${f1(bottom[0])}" y2="${f1(-bottom[1])}" stroke="${colour}" stroke-width="${f1(stroke * 9)}" stroke-linecap="round"/>`);
@@ -149,5 +151,5 @@ ${parts.join("\n")}
 /** Colour legend (HTML) for the plastic strain colours. */
 export function strainLegendHtml() {
   const swatch = (rgb, label) => `<span class="swatch" style="background:rgb(${rgb.join(",")})"></span>${label}`;
-  return `<div class="legend">${swatch(strainColour(0, 0), "elastic")} ${swatch(strainColour(0.0005, 0), "0.05 %")} ${swatch(strainColour(0.01, 0), "1 %")} ${swatch(strainColour(0.025, 0), "2.5 %")} ${swatch(strainColour(0.05, 0), "≥ 5 % (criterion)")} — equivalent plastic strain</div>`;
+  return `<div class="legend">${swatch(strainColour(0, 0), "elastic")} ${swatch(strainColour(0.0005, 0), "0.05 %")} ${swatch(strainColour(0.01, 0), "1 %")} ${swatch(strainColour(0.025, 0), "2.5 %")} ${swatch(strainColour(0.05, 0), "≥ 5 % (information)")} — equivalent plastic strain</div>`;
 }

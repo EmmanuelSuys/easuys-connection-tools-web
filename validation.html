@@ -52,6 +52,7 @@
     <section class="intro">
       <h1>Validation and scope</h1>
       <p class="status" role="note"><strong>Feasibility prototype — not for design use.</strong> The comparisons below show how far the tools have been checked so far. They do not make the tools a validated design aid.</p>
+      <p>FE resistance = limit load where the force-displacement curve flattens (twice-elastic-slope rule); 5 % strain is shown for information. Earlier bolt or anchor capacity events govern. EN checks remain the design checks.</p>
       <p>This page lists what each connection tool has been compared with, the result of each comparison and what has not been compared. The pages themselves state what each check covers.</p>
     </section>
 
@@ -60,20 +61,24 @@
       <div class="table-wrap"><table class="results-table validation-table">
         <thead><tr><th>Tool</th><th>Compared with</th><th>Result</th></tr></thead>
         <tbody>
-          <tr><th scope="row" rowspan="3"><a href="t-stub.html">T-stub</a></th>
+          <tr><th scope="row" rowspan="4"><a href="t-stub.html">T-stub</a></th>
             <td>Closed-form solutions for the shell element and the solver: elastic cantilever plate, membrane patch, plastic moment of a free strip</td>
             <td>−0.9 %; exact; −2.5 %</td></tr>
           <tr><td>The EN 1993-1-8 component model (Table 6.2), S355 T-stub with M20 10.9 bolts and flanges of 10, 25 and 40 mm</td>
-            <td>FE / EN = 0.91, 0.95 and 1.00, with the same failure mode (1, 2, 3)</td></tr>
+            <td>FE / EN = 0.84, 0.95 and 1.00, with the same failure mode (1, 2, 3)</td></tr>
           <tr><td>Two published tests: Bursi and Jaspart (1995), T-stubs T1 and T2</td>
             <td>See <a href="#tstub-tests">below</a></td></tr>
-          <tr><th scope="row" rowspan="3"><a href="base-plate.html">Column base</a></th>
+          <tr><td>FE limit-load mesh study, acceptance case t<sub>f</sub> = 10 mm (10 / 5 / 2.5 mm meshes)</td><td>82.65 / 74.74 / 71.28 kN: the change shrinks per halving (&minus;9.6 %, &minus;4.6 %; observed order 1.2, converged estimate about 68.6 kN). The former 5 % strain value fell 11.9 % from 5 to 2.5 mm (81.14 to 71.45 kN) and does not converge. No elastic first step at 5 mm: the first-secant fallback is used.</td></tr>
+          <tr><th scope="row" rowspan="5"><a href="base-plate.html">Column base</a></th>
             <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
             <td>The page examples equal the hand calculations. Column base: the earlier calculations used other assumptions for some steps; these differences are recorded and under review.</td></tr>
           <tr><td>Fixed base (EN 1993-1-8 Table 6.7): hand calculations of the three load cases (tension and compression, both flanges in compression, both anchor rows in tension), and the column base-plate module of the EA Suys calculation scripts on six cases</td>
             <td>Equal to the hand calculations. Against the scripts: the side forces, the compression width c, f<sub>jd</sub> and the compression resistance are equal in all six cases, and M<sub>j,Rd</sub> is equal wherever the compression side governs. The comparison showed that the scripts' module did not limit the compression side by the column flange and web (EN 1993-1-8 6.2.6.7); it has been corrected.</td></tr>
-          <tr><td>FE check of the base plate in uplift against the EN T-stub (at γ = 1): plate strips with one and with two plastic hinges (closed form), a thick plate where the anchors govern, the page example on three meshes</td>
-            <td>Strips: FE / EN = 0.99 and 0.98 (extrapolated over three meshes); anchors governing: 1.000. Where the plate governs, the FE result falls by 10–20 % per halving of the mesh (strain peak at the weld corner): FE / EN is then indicative only, and the page says so.</td></tr>
+          <tr><td>Like-for-like base-plate uplift comparisons at γ = 1: page example, t<sub>p</sub> = 20 mm, 11.5 mm mesh, 24 steps, 9.2 mm displacement limit</td>
+            <td>Supported: FE 611.021 / EN 561.323 kN = 1.089 (mode 2). Free: FE 539.907 / EN 393.281 kN = 1.373 (mode 1-2). Both reach a resistance event; free contact force is zero. EN applies the free pair: L<sub>b</sub> = 222 &gt; L<sub>b</sub>* = 75.974 mm.</td></tr>
+          <tr><td>Grout in series on the same page example: t<sub>g</sub> = 30 mm, assumed E<sub>g</sub> = 30000 MPa</td>
+            <td>Uplift support k<sub>0</sub> = 4000, k = 800 N/mm³: FE 609.834 / EN 561.323 kN = 1.086 (FE mode 1; EN mode 2). The free pair is unchanged. Compression bed: 120.843 → 107.814 N/mm³; f<sub>jd</sub> is unchanged. At 0 mm the original uplift and compression results are reproduced exactly.</td></tr>
+          <tr><td>FE limit-load mesh study, page uplift case with t<sub>p</sub> = 12 mm (23 / 11.5 / 5.75 mm meshes)</td><td>331.48 / 295.11 / 281.80 kN: &minus;11.0 %, &minus;4.5 % per halving (observed order 1.45, converged estimate about 274 kN; EN 283.16 kN). The former 5 % strain value kept falling about 12 % per halving (333.23 / 292.85 / 258.46 kN). Plate strip against its closed-form collapse load: 1.098 / 1.028 / 0.9995 (one hinge) and 1.279 / 1.097 / 1.030 (two hinges) at 10 / 5 / 2.5 mm.</td></tr>
           <tr><th scope="row" rowspan="2"><a href="steel-timber.html">Steel-to-timber</a></th>
             <td>Hand calculations of each page example (resistances and main intermediate values), and earlier engineering calculations of similar details from two projects</td>
             <td>The page examples equal the hand calculations. Where the method is the same, the timber, bolt and masonry values equal the earlier calculations.</td></tr>
@@ -85,13 +90,15 @@
           <tr><th scope="row"><a href="timber-timber.html">Timber-to-timber</a></th>
             <td>Four independent hand calculations (bolts at 30° with the capped rope effect, nails with the Table 8.1 reduction, the page example, bolts at 90° where splitting governs)</td>
             <td>Equal to better than 0.001 N.</td></tr>
-          <tr><th scope="row" rowspan="3">End plates: <a href="end-plate-column.html">beam to column</a>, <a href="end-plate-splice.html">splice</a>, <a href="end-plate-web.html">beam web</a></th>
+          <tr><th scope="row" rowspan="5">End plates: <a href="end-plate-column.html">beam to column</a>, <a href="end-plate-splice.html">splice</a>, <a href="end-plate-web.html">beam web</a></th>
             <td>The EN 1993-1-8 end-plate routes of the EA Suys structural tools: 9 reference cases, 43 rejected inputs and 270 random geometries</td>
             <td>All results equal (to 1 Nmm); the same inputs are rejected.</td></tr>
           <tr><td>Seven independent hand calculations of M<sub>j,Rd</sub> and the published SCI P398 Example C.1</td>
             <td>Equal within 0.001 kNm.</td></tr>
-          <tr><td>FE check of the end-plate tension zone against the EN component model (at γ = 1, default 10 mm mesh): one row against the T-stub FE, a two-row group, the three page examples, three meshes</td>
-            <td>Rows governed by the bolts within 0.1 %; one row equal to the T-stub FE; two-row group FE / EN = 0.96; page examples 0.90 (beam to column, end-plate side only), 0.94 (splice) and 1.07 (beam web). Results governed by the strain limit depend on the mesh; the page then warns.</td></tr>
+          <tr><td>FE check of the end-plate tension zone against the EN component model (at γ = 1, page default remains 10 mm): one row against the T-stub FE, a two-row group, the beam-to-column page example and a thin-plate mesh pair</td>
+            <td>Bolt-governed regressions retain the baseline resistance to 1e-9 relative. One row reproduces the T-stub TES result; two-row group FE / EN = 0.96. Beam-to-column page example at 15 mm: moment FE / EN = 0.898 (bolt event). Thin-plate TES and mesh results follow below.</td></tr>
+          <tr><td>TES mesh check, beam-to-column example with t<sub>p</sub> = 12 mm (15 / 12.5 mm meshes; coarser pair for runtime)</td><td>376.779 / 376.482 kN; difference 0.0791 %, PASS against &lt; 5 %. EN tension = 415.549 kN; FE / EN = 0.907 / 0.906. Both TES crossings are within the unchanged 4 mm limit.</td></tr>
+          <tr><td>Optional column-flange FE (off by default): rigid limit and thin flange on the page-example column geometry, 15 mm mesh</td><td>Rigid limit (t<sub>p</sub> / t<sub>fc</sub> / t<sub>wc</sub> = 16 / 80 / 30 mm): 566.592 kN with the rigid support, 558.467 kN coupled (&minus;1.434 %, PASS within 2 %); bolt forces at the same applied tension differ by at most 0.344 %. Thin flange (20 / 8 / 8.5 mm): 551.303 kN with the rigid support, 205.897 kN coupled (column-flange limit load); EN minimum of the two sides = 285.508 kN, FE / EN = 0.721 (reported without an acceptance band). External-support equilibrium error below 2 &times; 10<sup>&minus;9</sup> N in both cases. The default 10 mm coupled page model fits: 10,164 DOF &lt; 15,000.</td></tr>
           <tr><th scope="row" rowspan="2">Basic steel: <a href="steel-lap-joint.html">lap joint</a>, <a href="steel-bolt-group.html">bolt group</a>, <a href="steel-fillet-weld.html">fillet weld</a>, <a href="steel-plate-tension.html">plate in tension</a></th>
             <td>The corresponding routes of the EA Suys structural tools (21 reference files with 306 values, 639 random and edge-case inputs, 123 rejections) and 13 independent hand calculations</td>
             <td>All equal.</td></tr>
@@ -100,9 +107,12 @@
           <tr><th scope="row"><a href="timber-connectors.html">Screws and toothed plates</a>, <a href="contact-moment-joint.html">contact moment joint</a>, <a href="eta-brackets.html">ETA brackets</a>, <a href="masonry-fixings.html">fixings in masonry</a></th>
             <td>22 independent hand calculations (screws 2, toothed plates 2, contact joint 2, ETA brackets 6, masonry 10) and the earlier EA Suys calculation scripts (635 ETA and 424 masonry records)</td>
             <td>All equal. The earlier screw and toothed-plate scripts were not used as a reference, because the review found formula errors in them; these have been corrected.</td></tr>
+          <tr><th scope="row"><a href="contact-moment-joint.html">Contact moment joint — indicative FE</a></th>
+            <td>Rigid-plastic limit against EN M<sub>Rd</sub> (L<sub>c</sub> = 0.01 mm, μ<sub>c</sub> = 10<sup>6</sup>, ductile screws); elastic hand case with one screw and 200 strip springs at θ = 10<sup>−6</sup> rad</td>
+            <td>Rigid-plastic: FE 6.270668 kNm / EN 6.270875 kNm = 0.999967 (−0.0033 %). Elastic: δ<sub>0</sub> = 0.000020800 mm and M = 417.217363 Nmm, both within 10<sup>−6</sup> relative of the closed form. Assumed stiffness and ductility: the EN check decides.</td></tr>
         </tbody>
       </table></div>
-      <p class="note">These comparisons run as automated tests with every change of the tools. Apart from the T-stub, none of the checks has been compared with physical tests. The finite-element checks run at γ = 1 and are a cross-check of the EN model, not a design resistance.</p>
+      <p class="note">These comparisons run as automated tests with every change of the tools. Apart from the T-stub, none of the checks has been compared with physical tests. The steel and dowel finite-element comparisons run at γ = 1. The indicative contact-joint FE uses the EN design strengths with assumed stiffness and ductility; the EN check decides.</p>
     </section>
 
     <section class="panel" id="tstub-tests" aria-labelledby="tests-heading">
@@ -131,11 +141,11 @@
         <tbody>
           <tr><th scope="row">Test: maximum load (at separation)</th><td class="num">203 kN (9.7 mm)</td><td class="num">197 kN (2.5 mm)</td></tr>
           <tr><th scope="row">EN 1993-1-8 Table 6.2</th><td class="num">134.0 kN, mode 1<br><span class="muted">method 2: 159.6 kN</span></td><td class="num">206.1 kN, mode 2</td></tr>
-          <tr class="key"><th scope="row">FE of this tool</th><td class="num">146.3 kN, mode 1</td><td class="num">205.3 kN, mode 2</td></tr>
-          <tr><th scope="row">FE / test</th><td class="num">0.72</td><td class="num">1.04</td></tr>
+          <tr class="key"><th scope="row">FE of this tool</th><td class="num">144.1 kN, mode 1</td><td class="num">205.3 kN, mode 2</td></tr>
+          <tr><th scope="row">FE / test</th><td class="num">0.71</td><td class="num">1.04</td></tr>
           <tr><th scope="row">EN / test</th><td class="num">0.66</td><td class="num">1.05</td></tr>
-          <tr><th scope="row">FE / EN</th><td class="num">1.09</td><td class="num">1.00</td></tr>
-          <tr class="info"><th scope="row">FE with m measured from the web face (no fillet)</th><td class="num">108.4 kN (0.53 × test)</td><td class="num">158.8 kN (0.81 × test)</td></tr>
+          <tr><th scope="row">FE / EN</th><td class="num">1.08</td><td class="num">1.00</td></tr>
+          <tr class="info"><th scope="row">FE with m measured from the web face (no fillet)</th><td class="num">106.5 kN (0.52 × test)</td><td class="num">156.2 kN (0.79 × test)</td></tr>
         </tbody>
       </table></div>
 
@@ -147,8 +157,8 @@
           <tr><th scope="row">1 mm</th><td class="num">110 : 107 kN</td><td class="num">150 : 162 kN</td></tr>
           <tr><th scope="row">1.5 mm</th><td class="num">—</td><td class="num">180 : 205 kN</td></tr>
           <tr><th scope="row">2 mm</th><td class="num">150 : 141 kN</td><td class="num">—</td></tr>
-          <tr><th scope="row">3 mm</th><td class="num">170 : 146 kN</td><td class="num">—</td></tr>
-          <tr class="info"><th scope="row">FE resistance reached at (end of the FE curve)</th><td class="num">3.7 mm</td><td class="num">1.7 mm</td></tr>
+          <tr><th scope="row">3 mm</th><td class="num">beyond the TES event</td><td class="num">—</td></tr>
+          <tr class="info"><th scope="row">FE resistance reached at (interpolated event)</th><td class="num">2.4 mm</td><td class="num">1.7 mm</td></tr>
         </tbody>
       </table></div>
       <p class="note">Test forces are read from the published curves (about ±5 kN and ±0.2 mm). The separation is the relative displacement of the two T-stubs of a pair, i.e. twice the displacement of the modelled T-stub on its contact plane.</p>
@@ -156,18 +166,18 @@
       <h3>What the comparison shows</h3>
       <ul>
         <li><strong>T2 (mode 2):</strong> the FE and the EN resistance agree within 1 % and both lie 4–5 % above the test maximum. The FE is stiffer than the test: 8–14 % more force at the same separation. Both are compared at γ = 1 with measured strengths; the partial factors of a design check are not part of this comparison.</li>
-        <li><strong>T1 (mode 1, thin flange):</strong> the test load keeps rising to 203 kN at a separation of 9.7 mm, through strain hardening and membrane action at large deformation. Neither the EN model (134 kN) nor the FE resistance (the load at 5 % plastic strain, with small-displacement kinematics) counts on that reserve. Up to a separation of 2 mm the FE is 3–6 % below the test.</li>
-        <li><strong>Distance m:</strong> the shell model has no root fillet. With m measured from the web face it is 19–47 % below the tests; with the EN m (0.8 r off the web face) it comes within 0–9 % of the EN resistance (T1 lies between EN methods 1 and 2). The T-stub page therefore asks for the EN m for rolled sections.</li>
+        <li><strong>T1 (mode 1, thin flange):</strong> the test load keeps rising to 203 kN at a separation of 9.7 mm, through strain hardening and membrane action at large deformation. Neither the EN model (134 kN) nor the FE resistance (the twice-elastic-slope limit load, with small-displacement kinematics) counts on that reserve. Up to a separation of 2 mm the FE is 3–6 % below the test.</li>
+        <li><strong>Distance m:</strong> the shell model has no root fillet. With m measured from the web face it is 21–48 % below the tests; with the EN m (0.8 r off the web face) it comes within 0–8 % of the EN resistance (T1 lies between EN methods 1 and 2). The T-stub page therefore asks for the EN m for rolled sections.</li>
       </ul>
 
       <h3>Status of T1</h3>
-      <p>In the first comparison (11 October 2026) T1 with the EN geometry stopped with a singular stiffness matrix: with an odd number of flange elements across the width the web was not connected to the flange. The mesh now always has an even number of elements across the flange, and an automated test checks the connection for the T1 and T2 widths and solves T1 with the exact EN m. Rerun on 20 October 2026: T1 146.3 kN and T2 205.3 kN, without solver failure.</p>
+      <p>In the first comparison (11 October 2026) T1 with the EN geometry stopped with a singular stiffness matrix: with an odd number of flange elements across the width the web was not connected to the flange. The mesh now always has an even number of elements across the flange, and an automated test checks the connection for the T1 and T2 widths and solves T1 with the exact EN m. Rerun on 20 October 2026 with the former 5 % strain criterion: T1 146.3 kN and T2 205.3 kN, without solver failure. With TES on 22 October: T1 144.1 kN and T2 205.3 kN; the solver and mesh are unchanged.</p>
 
       <h3>Limits of this comparison</h3>
       <ul class="assumptions">
         <li>Two specimens, one bolt size (M12 8.8), one length and one bolt layout; no preloaded bolts.</li>
         <li>Not compared: bolt bending, flange and web of different strength (T1's web is 9 % stronger than its flange), several bolt rows, welded T-stubs, end plates and column flanges.</li>
-        <li>The FE resistance is an event (5 % plastic strain or bolt yield), not the ultimate load; the model has small-displacement kinematics and no fracture.</li>
+        <li>The FE resistance is the twice-elastic-slope limit load or an earlier bolt capacity event, not the ultimate load; the model has small-displacement kinematics and no fracture.</li>
         <li>The test values come from the figures of an author preprint, not from the original test records.</li>
       </ul>
     </section>

@@ -208,11 +208,7 @@ function runFe({ selftest = false } = {}) {
   feWorker.postMessage({ input: raw, design: designOptions });
 }
 
-function noEventReached(result) {
-  const boltCapacity = 0.9 * result.input.fub * result.input.As;
-  const boltYielded = Object.values(result.boltForces).some(force => force >= boltCapacity * (1 - 1e-7));
-  return result.maxPlasticStrain < 0.05 && !boltYielded;
-}
+
 
 function renderView() {
   if (!lastFeResult) return;
@@ -228,9 +224,8 @@ function renderView() {
 function renderFe(result) {
   lastFeResult = result;
   const ratio = result.fe.resistance / result.en.resistance;
-  const warnings = [];
+  const warnings = [...result.warnings];
   if (result.en.governing === "web") warnings.push("The web in tension governs the EN check; the FE model does not check the web.");
-  if (noEventReached(result)) warnings.push("No failure event was reached within the displacement limit: the FE value is a lower bound. Increase the displacement limit.");
   feSummary.innerHTML = `
     <div class="table-wrap"><table class="results-table"><tbody>
       <tr class="key"><th>FE resistance (γ = 1)</th><td class="num">${kN(result.fe.resistance)}</td></tr>
@@ -239,6 +234,8 @@ function renderFe(result) {
       <tr><th>Failure mode FE / EN</th><td class="num">${result.fe.mode} / ${result.en.mode}</td></tr>
       <tr><th>Failure displacement</th><td class="num">${fixed(result.fe.failureDisplacement, 2)} mm</td></tr>
       <tr><th>Prying force</th><td class="num">${kN(result.pryingForce)}</td></tr>
+      <tr><th>Elastic stiffness K<sub>e</sub></th><td class="num">${fixed(result.limitLoad.Ke / 1000, 2)} kN/mm</td></tr>
+      <tr><th>5 % peak strain (information)</th><td class="num">${result.strain5 ? `${fixed(result.strain5.F / 1000, 2)} kN at ${fixed(result.strain5.u, 3)} mm` : "not reached"}</td></tr>
       <tr><th>Maximum plastic strain</th><td class="num">${fixed(result.maxPlasticStrain * 100, 2)} %</td></tr>
       <tr><th>Model size</th><td class="num">${result.dofCount.toLocaleString("en")} DOF</td></tr>
       <tr><th>Analysis time (this browser)</th><td class="num">${fixed(result.timingMs / 1000, 1)} s</td></tr>

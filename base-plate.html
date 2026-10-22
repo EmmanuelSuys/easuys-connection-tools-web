@@ -96,7 +96,7 @@
           <button type="button" class="secondary" data-cancel-fe hidden>Cancel</button>
         </div>
       </div>
-      <p class="note">Shell model of the base plate and the column stub with plasticity, anchors as tension springs (elastic length L<sub>b</sub>, yield at 0.9&nbsp;f<sub>ub</sub>&nbsp;A<sub>s</sub>) and contact on a rigid support, loaded step by step to 5&nbsp;% plastic strain or anchor yield. It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value. The design actions above are not used. Where the 5&nbsp;% strain is reached at the corner of the column flange or wall weld, the FE value depends on the mesh (lower with a finer mesh); the report says so. <span data-fe-dof></span></p>
+      <p class="note">Shell model of the base plate and the column stub with plasticity, anchors as tension springs (elastic length L<sub>b</sub>, yield at 0.9&nbsp;f<sub>ub</sub>&nbsp;A<sub>s</sub>), loaded step by step to the limit load or an earlier anchor capacity event. Uplift runs twice: support under the plate against EN with prying, and a free plate against EN without prying. The marked pair follows EN 1993-1-8 Table 6.2: L<sub>b</sub> ≤ L<sub>b</sub>* means prying. FE resistance = limit load where the force-displacement curve flattens (twice-elastic-slope rule); 5 % strain is shown for information. It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value. The design actions above are not used. <span data-fe-dof></span></p>
       <div class="fe-settings" style="max-width: 780px">
         <fieldset>
           <legend>Load case</legend>
@@ -108,6 +108,9 @@
           <div class="field"><label for="fe-meshSize">Mesh size (empty: m<sub>x</sub>/3, 5 to 15 mm)</label><input id="fe-meshSize" name="fe-meshSize" inputmode="decimal" autocomplete="off" placeholder="auto"><span class="unit">mm</span></div>
           <div class="field"><label for="fe-displacementLimit">Displacement limit of the column (empty: automatic)</label><input id="fe-displacementLimit" name="fe-displacementLimit" inputmode="decimal" autocomplete="off" placeholder="auto"><span class="unit">mm</span></div>
           <div class="field"><label for="fe-loadSteps">Load steps</label><input id="fe-loadSteps" name="fe-loadSteps" inputmode="numeric" autocomplete="off" placeholder="24"><span class="unit">—</span></div>
+          <div class="field"><label for="fe-groutThickness">Grout thickness t<sub>g</sub> (mm), 0 = none</label><input id="fe-groutThickness" name="fe-groutThickness" inputmode="decimal" autocomplete="off" placeholder="0"><span class="unit">mm</span></div>
+          <div class="field"><label for="fe-groutE">Grout modulus E<sub>g</sub> (MPa), assumed</label><input id="fe-groutE" name="fe-groutE" inputmode="decimal" autocomplete="off" placeholder="30000"><span class="unit">MPa</span></div>
+          <p class="note">Grout layer in series with the support; 0 mm reproduces the stiff support.</p>
         </details>
         <div class="form-status" data-fe-status role="status" aria-live="polite"></div>
       </div>
@@ -116,6 +119,7 @@
         <span data-progress-text role="status" aria-live="polite"></span>
       </div>
       <div data-fe-output hidden>
+        <div data-fe-pairs></div>
         <div class="fe-grid">
           <div data-fe-summary></div>
           <div class="view-box">

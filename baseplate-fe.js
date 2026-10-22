@@ -10,12 +10,12 @@ import {
   normaliseBasePlateFeOptions,
   normaliseBasePlateInput
 } from "./lib/index.js";
-import { summaryTableHtml } from "./baseplate-fe-core.js";
+import { pryingPairsTableHtml, summaryTableHtml } from "./baseplate-fe-core.js";
 import { autoScale, fieldSvg, strainLegendHtml } from "./view3d.js";
 
 const SLOW_DOF = 6000;
 const DEFAULT_VIEW = { azimuth: -35, elevation: 28 };
-const SETTINGS = ["meshSize", "displacementLimit", "loadSteps"];
+const SETTINGS = ["meshSize", "displacementLimit", "loadSteps", "groutThickness", "groutE"];
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[c]);
 
@@ -117,6 +117,7 @@ export function mountBasePlateFe() {
 
   function render(result) {
     last = result;
+    $("[data-fe-pairs]").innerHTML = pryingPairsTableHtml(result);
     summary.innerHTML = `${summaryTableHtml(result)}${result.warnings.map(text => `<p class="warning">${escapeHtml(text)}</p>`).join("")}`;
     view.autoScale = autoScale(result.field, Math.max(result.input.hp, result.input.bp));
     view.factor = 1;
@@ -132,7 +133,7 @@ export function mountBasePlateFe() {
 
   function writeSelftest(payload) {
     const data = payload.state === "done"
-      ? { state: "done", loadCase: payload.result.loadCase, feResistance: payload.result.fe.resistance, feMode: payload.result.fe.mode, enResistance: payload.result.en.resistance, ratio: payload.result.ratio, dofCount: payload.result.dofCount, timingMs: payload.result.timingMs, equilibrium: payload.result.equilibrium.pass }
+      ? { state: "done", loadCase: payload.result.loadCase, feResistance: payload.result.fe.resistance, feMode: payload.result.fe.mode, enResistance: payload.result.en.resistance, ratio: payload.result.ratio, enApplies: payload.result.enApplies, pairs: payload.result.pairs?.map(p => ({ support: p.support, fe: p.fe, en: p.en, ratio: p.ratio, contactForce: p.contactForce, supportModulus: p.supportModulus })), dofCount: payload.result.dofCount, timingMs: payload.result.timingMs, equilibrium: payload.result.equilibrium.pass }
       : payload;
     selftestOutput.textContent = JSON.stringify(data);
     selftestOutput.dataset.state = payload.state;
@@ -157,7 +158,8 @@ export function mountBasePlateFe() {
       if (message.type === "progress") {
         progressBar.max = message.stepCount;
         progressBar.value = message.step;
-        stepText = `Load step ${message.step} of ${message.stepCount} (${message.displacement.toFixed(2)} mm)`;
+        const p = message.progress;
+        stepText = p ? `Run ${p.run} of ${p.runCount} (${p.support}): load step ${message.step - (p.run - 1) * message.stepCount / p.runCount} of ${message.stepCount / p.runCount} (${message.displacement.toFixed(2)} mm)` : `Load step ${message.step} of ${message.stepCount} (${message.displacement.toFixed(2)} mm)`;
         tick();
         return;
       }
@@ -168,6 +170,7 @@ export function mountBasePlateFe() {
         render(message.result);
         if (selftest) writeSelftest({ state: "done", result: message.result });
       } else {
+        $("[data-fe-pairs]").innerHTML = "";
         progressText.textContent = "";
         output.hidden = false;
         summary.innerHTML = `<p class="error">The FE analysis stopped: ${escapeHtml(message.message)}</p>`;
@@ -177,6 +180,7 @@ export function mountBasePlateFe() {
     };
     worker.onerror = event => {
       stop();
+      $("[data-fe-pairs]").innerHTML = "";
       progressText.textContent = "";
       output.hidden = false;
       summary.innerHTML = `<p class="error">The FE analysis could not run in this browser${event.message ? `: ${escapeHtml(event.message)}` : ""}.</p>`;

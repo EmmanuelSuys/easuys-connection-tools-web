@@ -46,9 +46,13 @@ export function mountEndPlateFe(type) {
 
   for (const [name, value] of Object.entries(FE_DEFAULTS)) {
     const control = panel.querySelector(`[name="fe-${name}"]`);
-    if (control) control.value = String(value);
+    if (control?.type === "checkbox") control.checked = value;
+    else if (control) control.value = String(value);
   }
-  const readOptions = () => normaliseFeOptions(Object.fromEntries(Object.keys(FE_DEFAULTS).map(name => [name, panel.querySelector(`[name="fe-${name}"]`)?.value])));
+  const readOptions = () => normaliseFeOptions(Object.fromEntries(Object.keys(FE_DEFAULTS).map(name => {
+    const control = panel.querySelector(`[name="fe-${name}"]`);
+    return [name, control?.type === "checkbox" ? control.checked : control?.value];
+  })));
 
   function refresh() {
     const running = worker !== null;

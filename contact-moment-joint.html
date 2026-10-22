@@ -53,7 +53,7 @@
       <p>A timber-to-timber interface resists compression by contact and tension by screws. The page finds the largest moment capacity at the entered axial force, with a full neutral-axis scan and tolerance checked local refinement.</p>
       <div class="scope" role="note" aria-label="Scope of the check">
         <div><p class="scope-title">Checked</p><ul><li>Contact compression at an angle to grain, EN 1995-1-1 6.2.3(2)</li><li>Axial screw withdrawal, head pull-through and tension, EN 1995-1-1 8.7.2</li><li>Equilibrium and moment capacity about one axis; numerical search reports its stopping reason</li></ul></div>
-        <div><p class="scope-title">Not checked</p><ul><li>Interface shear/friction, lateral screw action and axial/lateral interaction</li><li>Screw spacing, splitting, member checks away from the interface and other bending axes</li><li>No finite element analysis is used or needed for this clause based model</li></ul></div>
+        <div><p class="scope-title">Not checked</p><ul><li>Interface shear/friction, lateral screw action and axial/lateral interaction</li><li>Screw spacing, splitting, member checks away from the interface and other bending axes</li><li>Contact stiffness and ductility are assumptions in the indicative FE check below</li></ul></div>
         <p class="scope-link">What the tools have been compared with, and their limits: <a href="validation.html">Validation and scope</a>.</p>
       </div>
     </section>
@@ -62,6 +62,20 @@
       <section class="panel connection-panel" aria-label="Connection drawing"><h2>Connection</h2><div class="drawings" data-drawings></div></section>
     </div>
     <section class="panel" aria-label="Design check"><div class="panel-heading"><h2>Design check — EN 1995-1-1</h2><button type="button" class="secondary" data-print>Print</button></div><div data-summary></div><div data-checks></div><details class="intermediate"><summary>Intermediate values</summary><div data-values></div></details><details class="assumption-details"><summary>Assumptions and scope</summary><div data-assumptions></div></details></section>
+    <section class="panel" data-contact-fe aria-labelledby="contact-fe-heading">
+      <h2 id="contact-fe-heading">Indicative FE — contact and screw deformation</h2>
+      <p role="note"><strong>Indicative FE: assumed contact stiffness (L_c) and ductility (mu_c); EN 1995 gives no values for these. The EN check decides.</strong></p>
+      <p>Plane sections with compression-only timber springs and tension-only screws check whether the plastic compression block can develop before a screw reaches capacity. Withdrawal is brittle by default.</p>
+      <div class="fe-options">
+        <label for="fe-lc">L_c per member (mm)<input id="fe-lc" data-fe-lc type="number" min="0" step="any" value="180"></label>
+        <label for="fe-mu">mu_c<input id="fe-mu" data-fe-mu type="number" min="1" step="any" value="5"></label>
+        <label for="fe-behaviour">Screw behaviour<select id="fe-behaviour" data-fe-behaviour><option value="brittle">Brittle</option><option value="ductile">Ductile</option></select></label>
+        <label for="fe-theta">theta_max (rad)<input id="fe-theta" data-fe-theta type="number" min="0" step="any" value="0.05"></label>
+        <button type="button" class="secondary" data-fe-run>Run the FE again</button>
+      </div>
+      <p data-fe-status role="status" aria-live="polite">The indicative FE runs after each valid input change.</p>
+      <div data-fe-output></div>
+    </section>
   </main>
   <footer class="site-footer"><p>EA Suys · <span data-version></span> · Feasibility prototype — not for design use.</p></footer>
   <script type="module" src="contact-moment-joint.js"></script>

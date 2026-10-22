@@ -83,7 +83,7 @@
           <button type="button" class="secondary" data-cancel-fe hidden>Cancel</button>
         </div>
       </div>
-      <p class="note">Shell model of the end plate with all tension bolt rows, the beam web and the tension flange, with plasticity, bolt springs and contact on the primary-beam web, taken as rigid. The beam end turns about the centre of compression step by step to 5&nbsp;% plastic strain or a bolt reaching 0.9&nbsp;f<sub>ub</sub>&nbsp;A<sub>s</sub> (the T-stub criterion). It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value.</p>
+      <p class="note">Shell model of the end plate with all tension bolt rows, the beam web and the tension flange, with plasticity, bolt springs and contact on the primary-beam web, taken as rigid. The beam end turns about the centre of compression step by step to the limit load or an earlier bolt capacity event. FE resistance = limit load where the force-displacement curve flattens (twice-elastic-slope rule); 5 % strain is shown for information. It uses characteristic strengths (γ = 1) and is compared with the EN component model at γ = 1 — a check of the component model, not a design value.</p>
       <div class="fe-options">
         <label>Mesh size <select name="fe-meshSize"><option value="15">15 mm</option><option value="12.5">12.5 mm</option><option value="10">10 mm</option><option value="7.5">7.5 mm</option></select></label>
         <label>Loading <select name="fe-loading"><option value="rotation">rotation about the centre of compression</option><option value="uniform">tension zone pulled as a whole</option></select></label>
