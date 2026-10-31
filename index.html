@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Connection checks · EA Suys</title>
+<meta name="description" content="Steel, timber and masonry connection checks by EA Suys, on request: Eurocode design checks with drawings, and finite-element checks where the code method needs one.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://connection.easuys.com/">
+<link rel="icon" href="https://www.easuys.be/favicon.ico" sizes="any">
+<style>
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --ink: #18212a; --muted: #5a6670; --rule: #d5dce1; --accent: #1d5c86;
+  --font-display: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111518; --surface: #182026; --ink: #e3e8ec; --muted: #9aa7b1; --rule: #2b353d; --accent: #78b4de;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111518; --surface: #182026; --ink: #e3e8ec; --muted: #9aa7b1; --rule: #2b353d; --accent: #78b4de;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.85rem; margin: 0; line-height: 1.15; }
+.brand { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; margin: 0 0 10px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 16px; }
+.panel p { margin: 0 0 10px; max-width: 70ch; }
+.panel ul { margin: 0; padding-left: 20px; max-width: 70ch; }
+.panel li { margin-bottom: 4px; }
+a { color: var(--accent); }
+a.button { display: inline-block; font-family: var(--font-display); font-weight: 600; letter-spacing: 0.04em;
+  background: var(--accent); color: var(--surface); text-decoration: none; border-radius: 3px; padding: 9px 14px; }
+footer { font-size: 0.82rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Connection checks</h1>
+    <span class="brand">EA Suys</span>
+  </header>
+
+  <section class="panel">
+    <h2>Calculation on request</h2>
+    <p>EA Suys checks steel, timber and masonry connections with its own programs: Eurocode design checks with
+      drawings, and a finite-element check where the code method needs one. The checks are available on request;
+      they no longer run on this site.</p>
+    <p>Send us the connection (a sketch or the drawings), the member sizes, the materials and the design forces. You
+      receive the check with its drawings.</p>
+    <p><a class="button" href="mailto:info@easuys.be?subject=Connection%20check">Ask for a check</a></p>
+  </section>
+
+  <section class="panel">
+    <h2>Steel (EN 1993-1-8, EN 1992-4)</h2>
+    <ul>
+      <li>Bolted T-stub in tension: failure modes 1 to 3 with prying, with a finite-element cross-check.</li>
+      <li>Column base with cast-in anchors, pinned or fixed: compression, uplift and shear, the anchors in concrete and the column weld.</li>
+      <li>Bolted beam-to-column end plate, end-plate beam splice and double-sided connection to a beam web: rows and groups, moment resistance and stiffness.</li>
+      <li>Bolted lap joint, bolt group under eccentric load, fillet weld and plate in tension.</li>
+    </ul>
+  </section>
+  <section class="panel">
+    <h2>Timber (EN 1995-1-1)</h2>
+    <ul>
+      <li>Steel-to-timber and timber-to-timber dowel-type connections, screws and toothed plates.</li>
+      <li>Timber contact moment joints, proprietary brackets with a European Technical Assessment, and timber bearing.</li>
+    </ul>
+  </section>
+  <section class="panel">
+    <h2>Existing masonry</h2>
+    <ul>
+      <li>Fixings in existing masonry.</li>
+    </ul>
+  </section>
+
+  <footer>EA Suys · <a href="https://www.easuys.be/">www.easuys.be</a></footer>
+</div>
+</body>
+</html>
